@@ -1,0 +1,74 @@
+[
+  {
+    "KomentarId": 1,
+    "Turista": "turista1",
+    "SmestajNaziv": "Santorini Palace",
+    "Sadrzaj": "Prelep pogled na more!",
+    "Ocena": 5,
+    "Prihvacen": true
+  },
+  {
+    "KomentarId": 2,
+    "Turista": "turista1",
+    "SmestajNaziv": "Cairo Inn",
+    "Sadrzaj": "Blizu piramida, odlična hrana.",
+    "Ocena": 4,
+    "Prihvacen": true
+  },
+  {
+    "KomentarId": 3,
+    "Turista": "turista1",
+    "SmestajNaziv": "Barcelona Hostel",
+    "Sadrzaj": "Mala soba ali odlična lokacija.",
+    "Ocena": 3,
+    "Prihvacen": false
+  },
+  {
+    "KomentarId": 4,
+    "Turista": "turista1",
+    "SmestajNaziv": "Maldives Paradise Resort",
+    "Sadrzaj": "Raj na zemlji, sve preporuke!",
+    "Ocena": 5,
+    "Prihvacen": true
+  },
+  {
+    "KomentarId": 5,
+    "Turista": "turista1",
+    "SmestajNaziv": "",
+    "Sadrzaj": "dasdagd",
+    "Ocena": 3,
+    "Prihvacen": false
+  },
+  {
+    "KomentarId": 6,
+    "Turista": "turista1",
+    "SmestajNaziv": "",
+    "Sadrzaj": "dsad",
+    "Ocena": 3,
+    "Prihvacen": false
+  },
+  {
+    "KomentarId": 7,
+    "Turista": "turista1",
+    "SmestajNaziv": "Maldives Paradise Resort",
+    "Sadrzaj": "dsadas",
+    "Ocena": 3,
+    "Prihvacen": false
+  },
+  {
+    "KomentarId": 8,
+    "Turista": "turista1",
+    "SmestajNaziv": "Maldives Paradise Resort",
+    "Sadrzaj": "dadasgd",
+    "Ocena": 3,
+    "Prihvacen": false
+  },
+  {
+    "KomentarId": 9,
+    "Turista": "turista1",
+    "SmestajNaziv": "Barcelona Hostel",
+    "Sadrzaj": "dadafgda",
+    "Ocena": 3,
+    "Prihvacen": true
+  }
+]

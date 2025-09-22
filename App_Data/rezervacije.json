@@ -1,0 +1,44 @@
+[
+  {
+    "RezervacijaId": 1,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 1,
+    "SmestajnaJedinicaId": 2
+  },
+  {
+    "RezervacijaId": 2,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 3,
+    "SmestajnaJedinicaId": 6
+  },
+  {
+    "RezervacijaId": 3,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 1,
+    "SmestajnaJedinicaId": 1
+  },
+  {
+    "RezervacijaId": 4,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 3,
+    "SmestajnaJedinicaId": 4
+  },
+  {
+    "RezervacijaId": 5,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 4,
+    "SmestajnaJedinicaId": 5
+  },
+  {
+    "RezervacijaId": 6,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 5,
+    "SmestajnaJedinicaId": 7
+  }
+]

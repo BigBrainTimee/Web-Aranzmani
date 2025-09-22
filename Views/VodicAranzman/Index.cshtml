@@ -1,0 +1,120 @@
+﻿@model IEnumerable<WebAranzmani.Models.AranzmanInfo>
+@{
+    ViewBag.Title = "Aranžmani (vodič)";
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --text: #f8fafc;
+        --text-dim: #cfe7f2;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--c-deep), var(--c-mid));
+        color: var(--text);
+    }
+
+    .page-title {
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+
+    .neo-card {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 28px rgba(0,0,0,.25);
+    }
+
+    thead {
+        background: linear-gradient(90deg,#0e7490,#22d3ee);
+        color: #062a3a;
+        font-weight: 900;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+    }
+
+    .btn {
+        border-radius: 10px;
+        font-weight: 700;
+        padding: .35rem .75rem;
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg,#22c55e,#4ade80);
+        border: none;
+    }
+
+    .btn-warning {
+        background: linear-gradient(90deg,#d97706,#f59e0b);
+        border: none;
+        color: #2a1400;
+    }
+
+    .btn-danger {
+        background: linear-gradient(90deg,#ef4444,#f97316);
+        border: none;
+        color: #fff;
+    }
+
+    .btn-outline-light {
+        border: 1px solid #f8fafc;
+        color: #f8fafc;
+    }
+
+        .btn-outline-light:hover {
+            background: #f8fafc;
+            color: #0b2447;
+        }
+</style>
+
+<div class="container mt-4">
+    <h2 class="page-title">Aranžmani (vodič)</h2>
+
+    <div class="mb-3">
+        @Html.ActionLink("➕ Novi aranžman", "Kreiraj", "VodicAranzman", null, new { @class = "btn btn-success" })
+    </div>
+
+    <div class="neo-card p-3">
+        <table class="table table-bordered table-sm align-middle mb-0 text-light">
+            <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Početak</th>
+                    <th>Kraj</th>
+                    <th>Status</th>
+                    <th style="width:220px;">Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model ?? Enumerable.Empty<WebAranzmani.Models.AranzmanInfo>())
+                {
+                    <tr>
+                        <td class="fw-semibold">@a.Naziv</td>
+                        <td>@a.DatumPocetka.ToShortDateString()</td>
+                        <td>@a.DatumZavrsetka.ToShortDateString()</td>
+                        <td>
+                            @(a.Obrisano
+                                ? Html.Raw("<span class='badge bg-danger'>Obrisan</span>")
+                                : Html.Raw("<span class='badge bg-success'>Aktivan</span>"))
+                        </td>
+                        <td>
+                            @Html.ActionLink("👁️ Detalji", "Detalji", "VodicAranzman", new { id = a.Sifra }, new { @class = "btn btn-outline-light btn-sm me-1" })
+                            @Html.ActionLink("✏️ Izmeni", "Izmeni", "VodicAranzman", new { id = a.Sifra }, new { @class = "btn btn-warning btn-sm me-1" })
+                            @Html.ActionLink("🗑️ Obriši", "Obrisi", "VodicAranzman", new { id = a.Sifra }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Da li sigurno brišeš?')" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

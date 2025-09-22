@@ -1,0 +1,59 @@
+﻿@model List<WebAranzmani.Models.KomentarInfo>
+
+<style>
+    .glass {
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 22px rgba(0,0,0,.25);
+        padding: 1.5rem;
+    }
+
+    .comment-list li {
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 12px;
+        margin-bottom: .75rem;
+        padding: .9rem 1.1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    }
+
+    .comment-list strong {
+        color: #22d3ee;
+    }
+
+    .comment-text {
+        color: #cbd5e1;
+    }
+
+    .rating {
+        color: #facc15;
+        font-weight: 700;
+    }
+</style>
+
+<div class="container my-4">
+    <div class="glass">
+        <h4 class="fw-bold mb-3">💬 Komentari za smeštaj</h4>
+
+        @if (Model.Any(x => x.Prihvacen))
+        {
+            <ul class="list-unstyled comment-list">
+                @foreach (var k in Model.Where(x => x.Prihvacen))
+                {
+                    <li>
+                        <strong>@k.Turista</strong>
+                        — <span class="rating">@k.Ocena ★</span><br />
+                        <span class="comment-text">@k.Sadrzaj</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted fst-italic">Nema odobrenih komentara za ovaj smeštaj.</p>
+        }
+    </div>
+</div>

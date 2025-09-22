@@ -1,0 +1,146 @@
+﻿@model WebAranzmani.Models.AranzmanInfo
+@{
+    ViewBag.Title = "Novi aranžman";
+    var smestaji = ViewBag.Smestaji as List<WebAranzmani.Models.SmestajInfo> ?? new List<WebAranzmani.Models.SmestajInfo>();
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --text: #f8fafc;
+        --text-dim: #cfe7f2;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--c-deep), var(--c-mid));
+        color: var(--text);
+    }
+
+    .card-custom {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 28px rgba(0,0,0,.25);
+        padding: 22px;
+    }
+
+    h2 {
+        font-weight: 900;
+        color: #fff;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+        font-weight: 700;
+        color: var(--text-dim);
+    }
+
+    .form-control, .form-check-input {
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,.25);
+        background: rgba(255,255,255,.07);
+        color: #fff;
+    }
+
+        .form-control:focus {
+            border-color: var(--c-sky);
+            box-shadow: 0 0 0 0.25rem rgba(34, 211, 238, 0.25);
+        }
+
+    .btn {
+        border-radius: 10px;
+        font-weight: 700;
+        padding: .55rem 1.1rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg,#0ea5e9,#22d3ee);
+        color: #053b4c;
+    }
+
+    .btn-secondary {
+        background: #374151;
+        color: #f9fafb;
+    }
+
+    .form-check-label {
+        margin-left: .3rem;
+        font-weight: 500;
+    }
+
+    .section-title {
+        font-size: .95rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 20px 0 10px;
+        color: var(--text-dim);
+    }
+</style>
+
+<div class="container my-4">
+    <div class="card-custom">
+        <h2>Kreiraj aranžman</h2>
+
+        @using (Html.BeginForm("Kreiraj", "VodicAranzman", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Naziv, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control", required = "required", placeholder = "Naziv aranžmana..." })
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.DatumPocetka, new { @class = "form-label" })
+                    <input type="date" name="DatumPocetka" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.DatumZavrsetka, new { @class = "form-label" })
+                    <input type="date" name="DatumZavrsetka" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.BrojPutnika, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.BrojPutnika, new { @class = "form-control", type = "number", min = "1" })
+                </div>
+            </div>
+
+            <div class="section-title">Poster (slika destinacije)</div>
+            <div class="mb-3">
+                <input type="file" name="PosterFile" class="form-control" accept="image/*" />
+            </div>
+
+            <div class="section-title">Opis aranžmana</div>
+            <div class="mb-3">
+                @Html.TextAreaFor(m => m.Opis, new { @class = "form-control", rows = 4, placeholder = "Unesi opis..." })
+            </div>
+
+            <div class="section-title">Plan putovanja</div>
+            <div class="mb-3">
+                @Html.TextAreaFor(m => m.Plan, new { @class = "form-control", rows = 4, placeholder = "Unesi plan..." })
+            </div>
+
+            <div class="section-title">Smeštaji</div>
+            <div class="mb-3">
+                @foreach (var s in smestaji)
+                {
+                    <div class="form-check mb-1">
+                        <input type="checkbox" class="form-check-input" name="ListaSmestaja" value="@s.SmestajId" />
+                        <label class="form-check-label">@s.Naziv (@s.Vrsta)</label>
+                    </div>
+                }
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">➕ Sačuvaj</button>
+                @Html.ActionLink("⬅️ Nazad", "Index", "VodicAranzman", null, new { @class = "btn btn-secondary" })
+            </div>
+        }
+    </div>
+</div>

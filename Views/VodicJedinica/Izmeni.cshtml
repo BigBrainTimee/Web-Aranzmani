@@ -1,0 +1,176 @@
+﻿@model WebAranzmani.Models.SmestajnaJedinicaInfo
+@using WebAranzmani.Models
+@{
+    ViewBag.Title = "Izmeni jedinicu";
+    var smestaj = ViewBag.Smestaj as WebAranzmani.Models.SmestajInfo;
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --text: #f8fafc;
+        --text-dim: #cfe7f2;
+    }
+
+    body {
+        min-height: 100vh;
+        background: radial-gradient(1200px 600px at -10% -10%, rgba(255,255,255,.06), transparent 60%), radial-gradient(900px 600px at 110% 10%, rgba(255,255,255,.05), transparent 50%), linear-gradient(135deg, var(--c-deep) 0%, #0a3a5a 35%, var(--c-mid) 68%, var(--c-sky) 110%);
+        color: var(--text);
+    }
+
+    .card {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: var(--text);
+        overflow: hidden;
+    }
+
+    .card-hero {
+        background: linear-gradient(135deg, #0e7490 0%, #22d3ee 100%);
+        color: #062a3a;
+        border: none;
+    }
+
+        .card-hero h2 {
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .card-hero .badge {
+            background-color: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.25);
+            color: #062a3a;
+        }
+
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,.28);
+        background: rgba(255,255,255,.07);
+        color: #fff;
+    }
+
+        .form-control::placeholder {
+            color: #0b2447;
+            opacity: .9;
+        }
+
+    .form-text {
+        color: var(--text-dim);
+    }
+
+    .form-select.text-bg-info {
+        background-color: rgba(34,211,238,.22) !important;
+        color: #062a3a !important;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 12px;
+        font-weight: 900;
+        letter-spacing: .2px;
+        box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg,#0ea5e9,#22d3ee);
+        color: #053b4c;
+    }
+
+    .btn-outline-secondary {
+        color: #eaf7ff;
+        border: 1px solid rgba(255,255,255,.5);
+        background: transparent;
+    }
+
+        .btn-outline-secondary:hover {
+            background: rgba(255,255,255,.12);
+        }
+
+    .alert-danger {
+        border-radius: 14px;
+    }
+</style>
+
+<div class="container my-4">
+    <div class="card shadow rounded-4 border-0">
+
+        <div class="card-hero p-4 d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="mb-1">Izmeni jedinicu <span class="opacity-75">#@Model.JedinicaId</span></h2>
+                <div class="small opacity-75">
+                    Smeštaj: <strong>@(smestaj != null ? smestaj.Naziv : "—")</strong>
+                </div>
+            </div>
+            <span class="badge rounded-pill px-3 py-2">@Model.Status</span>
+        </div>
+
+        <div class="card-body">
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            @using (Html.BeginForm("Izmeni", "VodicJedinica", FormMethod.Post, new { @class = "needs-validation" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.JedinicaId)
+                @Html.HiddenFor(m => m.SmestajId)
+                @Html.HiddenFor(m => m.Obrisana)
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Kapacitet (broj gostiju)</label>
+                        <div class="input-group">
+                            <span class="input-group-text muted">👥</span>
+                            @Html.TextBoxFor(m => m.BrojGostiju,
+                                new { @class = "form-control with-unit", type = "number", min = "1", step = "1", required = "required", placeholder = "npr. 2" })
+                        </div>
+                        <div class="form-text">Unesi maksimalan broj gostiju.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold d-block">Kućni ljubimci</label>
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(m => m.Ljubimci, new { @class = "form-check-input", id = "petsSwitch" })
+                            <label class="form-check-label" for="petsSwitch">Dozvoljeni su kućni ljubimci</label>
+                        </div>
+                        <div class="form-text">Uključi ako su ljubimci dozvoljeni.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Cena</label>
+                        <div class="input-group">
+                            <span class="input-group-text muted">RSD</span>
+                            @Html.TextBoxFor(m => m.Cena,
+                                new { @class = "form-control with-unit", type = "number", step = "0.01", min = "0", required = "required", placeholder = "npr. 7999.00" })
+                        </div>
+                        <div class="form-text">Unesi cenu u dinarima.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Status</label>
+                        @Html.DropDownListFor(m => m.Status,
+                            new SelectList(new[]{
+                                new { v = StatusJedinice.Slobodna, t="Slobodna"},
+                                new { v = StatusJedinice.Zauzeta,  t="Zauzeta"},
+                            }, "v", "t", Model.Status),
+                            new { @class = "form-select form-select-lg text-bg-info", required = "required" })
+                        <div class="form-text">Označi da li je jedinica slobodna ili zauzeta.</div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg px-4">Sačuvaj</button>
+                    @Html.ActionLink("Nazad", "Index", "VodicJedinica",
+                        new { smestajId = Model.SmestajId },
+                        new { @class = "btn btn-outline-secondary btn-lg" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

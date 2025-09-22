@@ -1,0 +1,97 @@
+﻿@model WebAranzmani.Models.KorisnikInfo
+@{
+    ViewBag.Title = "Dodaj menadžera";
+}
+
+<style>
+    :root {
+        --deep: #052e2b;
+        --mid: #0d9488;
+        --accent: #34d399;
+        --light: #ecfdf5;
+        --glass: rgba(255,255,255,.06);
+        --stroke: rgba(255,255,255,.18);
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--deep), var(--mid));
+        color: var(--light);
+    }
+
+    h2 {
+        font-weight: 800;
+        background: linear-gradient(90deg, #fff, #a7f3d0, #fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+    }
+
+    .form-card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.25);
+        backdrop-filter: blur(10px);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #d1fae5;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,.25);
+        background: rgba(255,255,255,.1);
+        color: #fff;
+    }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(52,211,153,.4);
+        }
+
+    .btn-success {
+        background: linear-gradient(90deg, var(--mid), var(--accent));
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    }
+</style>
+
+<div class="form-card">
+    <h2 class="text-center">Dodaj novog menadžera</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            @Html.LabelFor(m => m.KorisnickoIme, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.KorisnickoIme, new { @class = "form-control", placeholder = "Unesite korisničko ime" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Lozinka, new { @class = "form-label" })
+            @Html.PasswordFor(m => m.Lozinka, new { @class = "form-control", placeholder = "Unesite lozinku" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Ime, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Ime, new { @class = "form-control", placeholder = "Ime menadžera" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Prezime, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control", placeholder = "Prezime menadžera" })
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success">Sačuvaj</button>
+        </div>
+    }
+</div>

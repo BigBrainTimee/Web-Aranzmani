@@ -1,0 +1,205 @@
+﻿@model List<WebAranzmani.Models.KomentarInfo>
+@{
+    ViewBag.Title = "Komentari (vodič)";
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --txt: #f8fafc;
+        --dim: #cfe7f2;
+        --ink: #062a3a;
+    }
+
+    body {
+        min-height: 100vh;
+        background: radial-gradient(1200px 600px at -10% -10%, rgba(255,255,255,.06), transparent 60%), radial-gradient(900px 600px at 110% 10%, rgba(255,255,255,.05), transparent 50%), linear-gradient(135deg, var(--c-deep) 0%, #0a3a5a 35%, var(--c-mid) 68%, var(--c-sky) 110%);
+        color: var(--txt);
+    }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' opacity='.05'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            mix-blend-mode: overlay;
+        }
+
+    .page-title {
+        font-weight: 800;
+        margin: .25rem 0 1rem;
+        background: linear-gradient(90deg,#fff,#e9f8ff 45%,#fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 20px rgba(34,211,238,.15);
+    }
+
+    .muted {
+        color: var(--dim);
+    }
+
+    .glass {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+
+    .filter-bar {
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        flex-wrap: wrap;
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(6,31,53,.92), rgba(9,86,112,.92));
+        border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .btn {
+        border: none;
+        font-weight: 700;
+        border-radius: 12px;
+        box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg,#0ea5e9,#22d3ee);
+        color: #053b4c;
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg,#16a34a,#22c55e);
+        color: #052a37;
+    }
+
+    .btn-danger {
+        background: linear-gradient(90deg,#ef4444,#f97316);
+        color: #fff;
+    }
+
+    .table-wrap {
+        overflow: hidden;
+        border-radius: 16px;
+        border: 1px solid var(--stroke);
+    }
+
+    table.table {
+        background: rgba(255,255,255,.03);
+        color: #eaf7ff;
+    }
+
+    .table thead th {
+        background: linear-gradient(90deg,#0e7490,#22d3ee) !important;
+        color: var(--ink) !important;
+        border: none !important;
+        font-weight: 800;
+    }
+
+    .badge-yes {
+        background: linear-gradient(90deg,#16a34a,#22c55e);
+        color: #052a37;
+    }
+
+    .badge-no {
+        background: linear-gradient(90deg,#ef4444,#f97316);
+        color: #fff;
+    }
+
+    .stars {
+        color: #facc15;
+        letter-spacing: .08em;
+    }
+
+    .comment-text {
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+</style>
+
+<div class="container my-4">
+    <h2 class="page-title">Komentari (vodič)</h2>
+
+    @using (Html.BeginForm("Index", "VodicKomentar", FormMethod.Get, new { @class = "mb-3" }))
+    {
+        <div class="filter-bar glass">
+            <input type="checkbox" id="samoNeprihvaceni" name="samoNeprihvaceni" value="true" @((ViewBag.SamoNeprihvaceni ?? false) ? "checked" : "") />
+            <label for="samoNeprihvaceni">Samo neprihvaćeni</label>
+            <button class="btn btn-primary btn-sm ms-auto">Primeni</button>
+        </div>
+    }
+
+    <div class="glass table-wrap">
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:15%">Turista</th>
+                        <th style="width:18%">Smeštaj</th>
+                        <th style="width:12%">Ocena</th>
+                        <th>Tekst</th>
+                        <th style="width:12%">Prihvaćen</th>
+                        <th style="width:18%">Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var k in Model)
+                        {
+                            var ocena = Math.Max(0, Math.Min(5, k.Ocena));
+                            <tr>
+                                <td class="fw-semibold">@k.Turista</td>
+                                <td>@k.SmestajNaziv</td>
+                                <td>
+                                    <div class="stars" title="@k.Ocena/5">
+                                        @Html.Raw(new string('★', ocena))@Html.Raw(new string('☆', 5 - ocena))
+                                    </div>
+                                </td>
+                                <td class="comment-text">@k.Sadrzaj</td>
+                                <td>
+                                    @if (k.Prihvacen)
+                                    {
+                                        <span class="badge badge-yes">Da</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-no">Ne</span>
+                                    }
+                                </td>
+                                <td>
+                                    @using (Html.BeginForm("Prihvati", "VodicKomentar", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", k.KomentarId)
+                                        <button class="btn btn-success btn-sm me-1">Odobri</button>
+                                    }
+                                    @using (Html.BeginForm("Odbij", "VodicKomentar", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", k.KomentarId)
+                                        <button class="btn btn-danger btn-sm">Odbij</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center muted py-4">Nema komentara za prikaz.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

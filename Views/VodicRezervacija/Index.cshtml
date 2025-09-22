@@ -1,0 +1,134 @@
+﻿@model List<WebAranzmani.Models.RezervacijaInfo>
+@using WebAranzmani.Repositories
+
+@{
+    ViewBag.Title = "Rezervacije (vodič)";
+    var arRepo = new AranzmaniRepozitorijum();
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --txt: #f8fafc;
+        --dim: #cfe7f2;
+        --ink: #062a3a;
+    }
+
+    body {
+        min-height: 100vh;
+        background: radial-gradient(1200px 600px at -10% -10%, rgba(255,255,255,.06), transparent 60%), radial-gradient(900px 600px at 110% 10%, rgba(255,255,255,.05), transparent 50%), linear-gradient(135deg, var(--c-deep) 0%, #0a3a5a 35%, var(--c-mid) 68%, var(--c-sky) 110%);
+        color: var(--txt);
+    }
+
+    .page-title {
+        font-weight: 800;
+        letter-spacing: .3px;
+        margin-top: .25rem;
+        background: linear-gradient(90deg,#fff,#e9f8ff 45%,#fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 20px rgba(34,211,238,.15);
+    }
+
+    .glass {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+
+    .table-wrap {
+        overflow: hidden;
+        border-radius: 16px;
+        border: 1px solid var(--stroke);
+    }
+
+    table.table {
+        margin: 0;
+        background: rgba(255,255,255,.03);
+        color: #eaf7ff;
+    }
+
+    thead th {
+        background: linear-gradient(90deg,#0e7490,#22d3ee) !important;
+        color: var(--ink) !important;
+        font-weight: 800;
+        letter-spacing: .2px;
+    }
+
+    .badge {
+        padding: .45em .6em;
+        font-weight: 800;
+        border-radius: 999px;
+    }
+
+        .badge.bg-success {
+            background: linear-gradient(90deg,#16a34a,#22c55e) !important;
+            color: #052a37 !important;
+        }
+
+        .badge.bg-danger {
+            background: linear-gradient(90deg,#ef4444,#f97316) !important;
+            color: #fff !important;
+        }
+
+        .badge.bg-secondary {
+            background: linear-gradient(90deg,#64748b,#94a3b8) !important;
+            color: #051821 !important;
+        }
+
+    .muted {
+        color: var(--dim);
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="page-title mb-3">Rezervacije (vodič)</h2>
+
+    <div class="glass table-wrap">
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Turista</th>
+                        <th style="width:30%">Aranžman</th>
+                        <th style="width:15%">Jedinica</th>
+                        <th style="width:15%">Status</th>
+                        <th style="width:20%">Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        var a = arRepo.PronadjiPoId(r.AranzmanId);
+                        string st = r.Status.ToString();
+                        string lo = st.ToLowerInvariant();
+                        string badge = lo.Contains("akt") ? "success"
+                                    : lo.Contains("otk") ? "danger"
+                                    : "secondary";
+                        <tr>
+                            <td class="fw-semibold">@r.Turista</td>
+                            <td>
+                                <div class="fw-semibold">@((a==null ? r.AranzmanId.ToString() : a.Naziv))</div>
+                                @if (a != null)
+                                {<div class="muted small text-wrap">@a.Opis</div>}
+                            </td>
+                            <td>#@r.SmestajnaJedinicaId</td>
+                            <td><span class="badge bg-@badge">@st</span></td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="@Url.Action("Detalji", new { id=r.RezervacijaId })">Detalji</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

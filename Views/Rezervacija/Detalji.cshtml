@@ -1,0 +1,69 @@
+﻿@model WebAranzmani.Models.RezervacijaInfo
+
+@{
+    ViewBag.Title = "Detalji rezervacije";
+    var a = ViewBag.Aranzman as WebAranzmani.Models.AranzmanInfo;
+    var s = ViewBag.Smestaj as WebAranzmani.Models.SmestajInfo;
+    var jed = ViewBag.Jedinica as WebAranzmani.Models.SmestajnaJedinicaInfo;
+
+    string statusText = Model.Status.ToString();
+    string css = statusText.ToLower().Contains("aktivna") ? "success"
+               : statusText.ToLower().Contains("otkazana") ? "danger" : "secondary";
+
+    var korisnik = Session["Korisnik"] as WebAranzmani.Models.KorisnikInfo;
+    bool jeMenadzer = korisnik != null && korisnik.Uloga == WebAranzmani.Models.Uloga.Menadzer;
+    bool jeTurista = korisnik != null && korisnik.Uloga == WebAranzmani.Models.Uloga.Turista;
+}
+
+<div class="container py-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-info text-dark fw-bold">
+            Rezervacija #@Model.RezervacijaId
+            <span class="badge bg-@css float-end">@statusText</span>
+        </div>
+        <div class="card-body">
+            <h4>@(a?.Naziv ?? "—")</h4>
+            <p class="text-muted">@a?.Opis</p>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Početak:</strong> @(a?.DatumPocetka.ToString("dd/MM/yyyy") ?? "—")</p>
+                    <p><strong>Kraj:</strong> @(a?.DatumZavrsetka.ToString("dd/MM/yyyy") ?? "—")</p>
+                    <p><strong>Prevoz:</strong> @(a != null ? a.VrstaPrevoza.ToString() : "—")</p>
+                    <p><strong>Lokacija:</strong> @(a != null ? a.VrstaLokacije.ToString() : "—")</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Smeštajna jedinica</h6>
+                    <p><strong>Smeštaj:</strong> @(s?.Naziv ?? "—")</p>
+                    @if (jed != null)
+                    {
+                        <p><strong>Kapacitet:</strong> @jed.BrojGostiju</p>
+                        <p><strong>Cena:</strong> @jed.Cena €</p>
+                        <p><strong>Status:</strong> @jed.Status</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Podaci o jedinici nisu dostupni.</p>
+                    }
+                </div>
+            </div>
+
+            @if (jeMenadzer)
+            {
+                <hr />
+                <h6>👤 Podaci o turisti</h6>
+                <p><strong>Korisničko ime:</strong> @Model.Turista</p>
+            }
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a href="@Url.Action("Index","Rezervacija")" class="btn btn-secondary">Nazad</a>
+            @if (jeTurista && (bool)(ViewBag.MozeKomentar ?? false))
+            {
+                <a href="@Url.Action("Create","Komentar", new { smestajNaziv = s?.Naziv })"
+                   class="btn btn-primary">Ostavi komentar</a>
+            }
+        </div>
+    </div>
+</div>

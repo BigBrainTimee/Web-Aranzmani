@@ -1,0 +1,121 @@
+﻿@model List<WebAranzmani.Models.SmestajnaJedinicaInfo>
+@using WebAranzmani.Models
+@{
+    var smestaj = ViewBag.Smestaj as SmestajInfo;
+    ViewBag.Title = "Smeštajne jedinice";
+}
+
+<style>
+    /* isti stilovi kao kod prethodnih view-ova */
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --text: #f8fafc;
+        --text-dim: #cfe7f2;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, var(--c-deep), var(--c-mid));
+        color: var(--text);
+    }
+
+    .cardx {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        color: var(--text);
+    }
+
+    .cardx-header {
+        padding: 18px 24px;
+        background: linear-gradient(90deg,#0e7490,#22d3ee);
+        color: #062a3a;
+    }
+
+    .btn {
+        border-radius: 12px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+</style>
+
+<div class="container my-4">
+    <div class="cardx">
+        <div class="cardx-header d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mb-1">Smeštajne jedinice</h3>
+                <div class="small">Smeštaj: <strong>@(smestaj?.Naziv ?? "—")</strong></div>
+            </div>
+            <div class="d-flex gap-2">
+                @Html.ActionLink("Nazad na smeštaje", "Index", "VodicSmestaj", null, new { @class = "btn btn-outline-secondary" })
+                @Html.ActionLink("Nova jedinica", "Kreiraj", "VodicJedinica",
+                    new { smestajId = smestaj?.SmestajId ?? 0 }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+
+        <div class="p-3">
+            @if (TempData["OK"] != null)
+            {<div class="alert alert-success">@TempData["OK"]</div>}
+            @if (TempData["ERR"] != null)
+            {<div class="alert alert-danger">@TempData["ERR"]</div>}
+
+            <table class="table table-hover align-middle text-light">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kapacitet</th>
+                        <th>Status</th>
+                        <th>Cena</th>
+                        <th>Ljubimci</th>
+                        <th>Akcije</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var j in Model)
+                        {
+                            var statusClass =
+                                j.Status == StatusJedinice.Slobodna ? "badge bg-success" :
+                                j.Status == StatusJedinice.Zauzeta ? "badge bg-danger" :
+                                "badge bg-secondary";
+
+                            <tr>
+                                <td>@j.JedinicaId</td>
+                                <td>@j.BrojGostiju osoba</td>
+                                <td><span class="@statusClass">@j.Status</span></td>
+                                <td>@(j.Cena > 0 ? j.Cena.ToString("N0") + " RSD" : "—")</td>
+
+                                <td>@(j.Ljubimci ? "Da" : "Ne")</td>
+                                <td>
+                                    @Html.ActionLink("Izmeni", "Izmeni", "VodicJedinica", new { id = j.JedinicaId }, new { @class = "btn btn-sm btn-warning me-1" })
+
+                                    @using (Html.BeginForm("Obrisi", "VodicJedinica", FormMethod.Post,
+                                             new { onsubmit = "return confirm('Obrisati ovu jedinicu?');" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", j.JedinicaId)
+                                        <button type="submit" class="btn btn-sm btn-danger">Obriši</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Nema dodatih jedinica.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

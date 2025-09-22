@@ -1,0 +1,114 @@
+﻿@model IEnumerable<WebAranzmani.Models.KomentarInfo>
+@using WebAranzmani.Models
+
+@{
+    ViewBag.Title = "Komentari na odobravanje";
+    var korisnik = Session["Korisnik"] as KorisnikInfo;
+    bool jeMenadzer = korisnik != null && korisnik.Uloga == Uloga.Menadzer;
+}
+
+<style>
+    .glass {
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 22px rgba(0,0,0,.25);
+    }
+
+    .table thead th {
+        background: linear-gradient(90deg,#0e7490,#22d3ee);
+        color: #062a3a;
+        font-weight: 700;
+        border: none;
+    }
+
+    .table tbody td {
+        vertical-align: middle;
+        border-color: rgba(255,255,255,.15) !important;
+    }
+
+    .rating {
+        color: #facc15;
+        font-weight: 700;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="glass p-4">
+        <h3 class="fw-bold mb-4">💬 Komentari na odobravanje</h3>
+
+        @if (TempData["OK"] != null)
+        {
+            <div class="alert alert-success">@TempData["OK"]</div>
+        }
+        @if (TempData["Greska"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Greska"]</div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Turista</th>
+                        <th>Smeštaj</th>
+                        <th>Tekst</th>
+                        <th>Ocena</th>
+                        @if (jeMenadzer)
+                        {
+                            <th>Akcije</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var k in Model)
+                        {
+                            <tr class="table-warning">
+                                <td>@k.Turista</td>
+                                <td>@k.SmestajNaziv</td>
+                                <td>@k.Sadrzaj</td>
+                                <td class="rating">@k.Ocena/5</td>
+                                @if (jeMenadzer)
+                                {
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            @using (Html.BeginForm("Odobri", "Komentar", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("id", k.KomentarId)
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    ✅ Odobri
+                                                </button>
+                                            }
+                                            @using (Html.BeginForm("Odbij", "Komentar", FormMethod.Post))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("id", k.KomentarId)
+                                                <button type="submit" class="btn btn-danger btn-sm" @(k.Prihvacen ? "" : "")>
+                                                    ❌ Odbij
+                                                </button>
+
+                                            }
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="@(jeMenadzer ? 5 : 4)" class="text-center text-muted fst-italic">
+                                Nema komentara za pregled.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Prijava";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:80vh;">
+    <div class="card shadow-lg p-4" style="width:420px; border-radius:16px; background:#f9fafb;">
+        <h3 class="text-center mb-4 fw-bold text-primary">🔑 Prijava na sistem</h3>
+
+        @using (Html.BeginForm("Prijava", "Korisnik", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label for="korisnickoIme" class="form-label">Korisničko ime</label>
+                <input type="text" name="korisnickoIme" class="form-control" placeholder="Unesite korisničko ime" required />
+            </div>
+            <div class="mb-3">
+                <label for="lozinka" class="form-label">Lozinka</label>
+                <input type="password" name="lozinka" class="form-control" placeholder="Unesite lozinku" required />
+            </div>
+
+            if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-center">@ViewBag.Error</div>
+            }
+
+            <button type="submit" class="btn btn-primary w-100">Prijavi se</button>
+        }
+
+        <div class="text-center mt-3">
+            <small>Nemate nalog? <a href="@Url.Action("Registracija","Korisnik")">Registrujte se</a></small>
+        </div>
+    </div>
+</div>

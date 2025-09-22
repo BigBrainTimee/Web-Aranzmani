@@ -1,0 +1,43 @@
+﻿@model WebAranzmani.Models.SmestajInfo
+@{
+    ViewBag.Title = "Izmeni smeštaj";
+}
+
+<style>
+    .form-card { max-width: 700px; margin:0 auto; background: rgba(255,255,255,.05); border-radius: 16px; padding: 25px; box-shadow:0 10px 25px rgba(0,0,0,.25); }
+    .form-label { font-weight: 600; }
+    .btn-update { background: linear-gradient(90deg,#3b82f6,#38bdf8); border:none; color:#fff; }
+</style>
+
+<div class="container my-5">
+    <div class="form-card">
+        <h2 class="text-center mb-4">✏️ Izmeni smeštaj</h2>
+
+        @using (Html.BeginForm("Izmeni", "VodicSmestaj", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.SmestajId)
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Naziv, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Vrsta, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Vrsta, new { @class = "form-control" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Zvezdice, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Zvezdice, new { @class = "form-control", type="number", min="0", max="5" })
+            </div>
+            <div class="form-check mb-3">
+                @Html.CheckBoxFor(m => m.Bazen, new { @class = "form-check-input" })
+                <label class="form-check-label">Bazen</label>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-update px-4">Ažuriraj</button>
+            </div>
+        }
+    </div>
+</div>

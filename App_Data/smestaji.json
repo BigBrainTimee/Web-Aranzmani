@@ -1,0 +1,143 @@
+[
+  {
+    "SmestajId": 1,
+    "AranzmanId": 1,
+    "Vrsta": 0,
+    "Naziv": "Santorini Palace",
+    "Zvezdice": 5,
+    "Bazen": true,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": false,
+    "Jedinice": [1, 2],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 2,
+    "AranzmanId": 2,
+    "Vrsta": 2,
+    "Naziv": "Villa Thira",
+    "Zvezdice": null,
+    "Bazen": false,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": true,
+    "Jedinice": [
+      3
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 3,
+    "AranzmanId": 3,
+    "Vrsta": 0,
+    "Naziv": "Cairo Inn",
+    "Zvezdice": 4,
+    "Bazen": true,
+    "SpaCentar": true,
+    "Prilagodjen": true,
+    "Wifi": false,
+    "Jedinice": [
+      4
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 4,
+    "AranzmanId": 4,
+    "Vrsta": 1,
+    "Naziv": "Barcelona Hostel",
+    "Zvezdice": null,
+    "Bazen": false,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": true,
+    "Jedinice": [
+      5,
+      6
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 5,
+    "AranzmanId": 5,
+    "Vrsta": 0,
+    "Naziv": "Maldives Paradise Resort",
+    "Zvezdice": 5,
+    "Bazen": true,
+    "SpaCentar": true,
+    "Prilagodjen": true,
+    "Wifi": true,
+    "Jedinice": [
+      7,
+      8
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 6,
+    "AranzmanId": 6,
+    "Vrsta": 2,
+    "Naziv": "Oslo Fjord Cabin",
+    "Zvezdice": null,
+    "Bazen": false,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": true,
+    "Jedinice": [
+      9
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 7,
+    "AranzmanId": 6,
+    "Vrsta": 0,
+    "Naziv": "Istanbul Grand Hotel",
+    "Zvezdice": 5,
+    "Bazen": true,
+    "SpaCentar": true,
+    "Prilagodjen": true,
+    "Wifi": true,
+    "Jedinice": [
+      10,
+      11
+    ],
+    "Komentari": [],
+    "Obrisano": false
+  },
+  {
+    "SmestajId": 8,
+    "AranzmanId": 2,
+    "Vrsta": 0,
+    "Naziv": "asdas",
+    "Zvezdice": 5,
+    "Bazen": true,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": false,
+    "Jedinice": [],
+    "Komentari": [],
+    "Obrisano": true
+  },
+  {
+    "SmestajId": 9,
+    "AranzmanId": 0,
+    "Vrsta": 0,
+    "Naziv": "fdfsf",
+    "Zvezdice": 5,
+    "Bazen": true,
+    "SpaCentar": false,
+    "Prilagodjen": false,
+    "Wifi": false,
+    "Jedinice": [],
+    "Komentari": [],
+    "Obrisano": true
+  }
+]

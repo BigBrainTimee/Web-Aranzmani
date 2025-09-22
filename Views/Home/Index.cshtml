@@ -1,0 +1,205 @@
+﻿<style>
+    :root {
+        --c-bg: #1e1b29;
+        --c-primary: #8b5cf6;
+        --c-secondary: #ec4899;
+        --c-light: #f9fafb;
+        --c-dim: #9ca3af;
+    }
+
+    body {
+        background: linear-gradient(160deg, var(--c-bg), #111827);
+        color: var(--c-light);
+        min-height: 100vh;
+    }
+
+    h2.section-title {
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Filter i sortiranje kao full-width paneli */
+    .filter-panel, .sort-panel {
+        background: rgba(255,255,255,.05);
+        border-radius: 16px;
+        padding: 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+
+        .filter-panel h5, .sort-panel h5 {
+            font-weight: 700;
+            color: var(--c-primary);
+            margin-bottom: 12px;
+        }
+
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, .2);
+        background: rgba(255, 255, 255, .1);
+        color: #fff;
+        font-size: 0.9rem;
+    }
+
+        .form-control::placeholder {
+            color: var(--c-dim);
+        }
+
+    .btn-apply {
+        background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+    .btn-sort {
+        background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+    /* Kartice aranžmana */
+    .trip-card {
+        border-radius: 20px;
+        overflow: hidden;
+        transition: transform .2s, box-shadow .2s;
+    }
+
+        .trip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(0,0,0,.45);
+        }
+
+        .trip-card .card-img-top {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .trip-card .card-body {
+            background: #2d1f3d;
+            text-align: center;
+        }
+
+        .trip-card .card-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+    .btn-details {
+        background: transparent;
+        border: 2px solid var(--c-primary);
+        color: var(--c-primary);
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+        .btn-details:hover {
+            background: linear-gradient(90deg, var(--c-secondary), var(--c-primary));
+            color: #fff;
+            border: none;
+        }
+</style>
+
+<h2 class="section-title">Pregled aranžmana</h2>
+
+<!-- Filter panel -->
+<div class="filter-panel">
+    <h5>🔎 Pretraga i filteri</h5>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="naziv" class="form-control form-control-sm" placeholder="Naziv aranžmana" />
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="datumOd" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="datumDo" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="krajOd" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="krajDo" class="form-control form-control-sm" />
+            </div>
+            <div class="col-md-3">
+                <select name="tipPrevoza" class="form-select form-select-sm text-black">
+                    <option value="">-- Prevoz --</option>
+                    <option value="avion">Avion</option>
+                    <option value="autobus">Autobus</option>
+                    <option value="autobus_avion">Bus + Avion</option>
+                    <option value="individualan">Individualan</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="tipAranzmana" class="form-select form-select-sm text-black">
+                    <option value="">-- Paket --</option>
+                    <option value="nocenje_sa_doruckom">Noćenje + doručak</option>
+                    <option value="polupansion">Polupansion</option>
+                    <option value="pun_pansion">Pun pansion</option>
+                    <option value="all_inclusive">All inclusive</option>
+                    <option value="najam_apartmana">Najam apartmana</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-apply btn-sm w-100">Primeni</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Sort panel -->
+<div class="sort-panel">
+    <h5>📊 Sortiranje</h5>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <select name="sort" class="form-select form-select-sm text-black">
+                    <option value="">-- Kriterijum --</option>
+                    <option value="nazivAsc">Naziv A → Z</option>
+                    <option value="nazivDesc">Naziv Z → A</option>
+                    <option value="pocetakAsc">Početak ↑</option>
+                    <option value="pocetakDesc">Početak ↓</option>
+                    <option value="krajAsc">Završetak ↑</option>
+                    <option value="krajDesc">Završetak ↓</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-sort btn-sm w-100">Sortiraj</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Lista aranžmana -->
+<div class="row">
+    @foreach (var a in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card trip-card h-100">
+                <img src="~/Content/Images/@a.Poster" class="card-img-top" alt="@a.Naziv" />
+                <div class="card-body">
+                    <h6 class="card-title">@a.Naziv</h6>
+                    <p class="card-text">
+                        <strong>Lokacija:</strong> @a.VrstaLokacije <br />
+                        <strong>Paket:</strong> @a.Paket <br />
+                        <strong>Prevoz:</strong> @a.VrstaPrevoza <br />
+                        <strong>Period:</strong> @a.DatumPocetka.ToShortDateString() - @a.DatumZavrsetka.ToShortDateString() <br />
+                        <strong>Putnici:</strong> @a.BrojPutnika
+                    </p>
+                    @Html.ActionLink("Detaljnije", "Detalji", "Home",
+                        new { naziv = a.Naziv },
+                        new { @class = "btn btn-details btn-sm w-100" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

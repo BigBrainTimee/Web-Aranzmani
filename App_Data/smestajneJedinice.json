@@ -1,0 +1,123 @@
+[
+  {
+    "JedinicaId": 1,
+    "SmestajId": 1,
+    "BrojGostiju": 2,
+    "Ljubimci": true,
+    "Cena": 90.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 2,
+    "SmestajId": 1,
+    "BrojGostiju": 4,
+    "Ljubimci": false,
+    "Cena": 160.0,
+    "Status": 0,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 3,
+    "SmestajId": 2,
+    "BrojGostiju": 3,
+    "Ljubimci": true,
+    "Cena": 120.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 4,
+    "SmestajId": 3,
+    "BrojGostiju": 2,
+    "Ljubimci": false,
+    "Cena": 100.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 5,
+    "SmestajId": 4,
+    "BrojGostiju": 1,
+    "Ljubimci": true,
+    "Cena": 60.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 6,
+    "SmestajId": 4,
+    "BrojGostiju": 2,
+    "Ljubimci": false,
+    "Cena": 75.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 7,
+    "SmestajId": 5,
+    "BrojGostiju": 2,
+    "Ljubimci": false,
+    "Cena": 200.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 8,
+    "SmestajId": 5,
+    "BrojGostiju": 3,
+    "Ljubimci": true,
+    "Cena": 250.0,
+    "Status": 0,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 9,
+    "SmestajId": 6,
+    "BrojGostiju": 4,
+    "Ljubimci": false,
+    "Cena": 180.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 10,
+    "SmestajId": 7,
+    "BrojGostiju": 2,
+    "Ljubimci": false,
+    "Cena": 140.0,
+    "Status": 0,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 11,
+    "SmestajId": 7,
+    "BrojGostiju": 3,
+    "Ljubimci": true,
+    "Cena": 170.0,
+    "Status": 0,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  }
+]

@@ -1,0 +1,54 @@
+﻿@model WebAranzmani.Models.SmestajInfo
+@{
+    ViewBag.Title = "Dodaj smeštaj";
+}
+
+<style>
+    .form-card {
+        max-width: 700px;
+        margin: 0 auto;
+        background: rgba(255,255,255,.05);
+        border-radius: 16px;
+        padding: 25px;
+        border: 1px solid rgba(255,255,255,.12);
+        box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    .form-label { font-weight: 600; }
+    .btn-save { background: linear-gradient(90deg,#22c55e,#4ade80); border:none; color:#fff; }
+</style>
+
+<div class="container my-5">
+    <div class="form-card">
+        <h2 class="text-center mb-4">➕ Dodaj novi smeštaj</h2>
+
+        @using (Html.BeginForm("Kreiraj", "VodicSmestaj", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Naziv, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control", placeholder="Naziv smeštaja" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Vrsta, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Vrsta, new { @class = "form-control", placeholder="Tip (hotel, vila...)" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Zvezdice, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Zvezdice, new { @class = "form-control", type="number", min="0", max="5" })
+            </div>
+            <div class="form-check mb-3">
+                @Html.CheckBoxFor(m => m.Bazen, new { @class = "form-check-input" })
+                <label class="form-check-label">Bazen</label>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Aranžman</label>
+                @Html.DropDownList("aranzmanId", (SelectList)ViewBag.MojiAranzmani, "-- Izaberi aranžman --", new { @class = "form-select" })
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-save px-4">Sačuvaj</button>
+            </div>
+        }
+    </div>
+</div>

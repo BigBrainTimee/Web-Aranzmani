@@ -1,0 +1,40 @@
+﻿@model WebAranzmani.Models.SmestajnaJedinicaInfo
+
+<div class="card mb-3 shadow-sm border-0">
+    <div class="card-body">
+        <h5 class="card-title">Smeštajna jedinica #@Model.JedinicaId</h5>
+
+        <p><strong>👥 Broj gostiju:</strong> @Model.BrojGostiju</p>
+        <p><strong>💰 Cena:</strong> @Model.Cena RSD</p>
+        <p><strong>📌 Status:</strong> @Model.Status</p>
+        <p><strong>🐾 Ljubimci dozvoljeni:</strong> @(Model.Ljubimci ? "Da" : "Ne")</p>
+
+        @if (Model.Obrisana)
+        {
+            <p class="text-danger fw-bold">⚠️ Ova jedinica je obrisana.</p>
+        }
+
+        <!-- Komentari -->
+        <div class="mt-4">
+            <h6 class="fw-bold mb-2">💬 Komentari</h6>
+
+            @if (Model.Komentari != null && Model.Komentari.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var k in Model.Komentari)
+                    {
+                        <li class="list-group-item">
+                            <strong>@k.Turista</strong>
+                            — <span class="text-warning">@k.Ocena ★</span><br />
+                            <span class="text-muted">@k.Sadrzaj</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted fst-italic">Nema komentara za ovu jedinicu.</p>
+            }
+        </div>
+    </div>
+</div>

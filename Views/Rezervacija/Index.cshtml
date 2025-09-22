@@ -1,0 +1,137 @@
+﻿@model IEnumerable<WebAranzmani.Models.RezervacijaInfo>
+@using System.Linq
+@using WebAranzmani.Models
+
+@{
+    ViewBag.Title = "Rezervacije";
+
+    var aranzmani = ViewBag.Aranzmani as List<AranzmanInfo>;
+    var smestaji = ViewBag.Smestaji as List<SmestajInfo>;
+    var jedinice = ViewBag.SmestajneJedinice as List<SmestajnaJedinicaInfo>;
+
+    var korisnik = Session["Korisnik"] as KorisnikInfo;
+    bool jeMenadzer = korisnik != null && korisnik.Uloga == Uloga.Menadzer;
+}
+
+<div class="container py-4">
+    <h2 class="mb-3 fw-bold text-gradient">📖 @(jeMenadzer ? "Sve rezervacije" : "Moje rezervacije")</h2>
+
+    <!-- Filter i pretraga -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            @using (Html.BeginForm("Index", "Rezervacija", FormMethod.Get))
+            {
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <input type="text" name="searchId" value="@(Request["searchId"] ?? "")"
+                               class="form-control form-control-sm" placeholder="ID rezervacije" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="searchNaziv" value="@(Request["searchNaziv"] ?? "")"
+                               class="form-control form-control-sm" placeholder="Naziv aranžmana" />
+                    </div>
+                    <div class="col-md-3">
+                        <select name="searchStatus" class="form-select form-select-sm">
+                            <option value="">-- Status --</option>
+                            <option value="aktivna" @(Request["searchStatus"]?.ToString() == "aktivna" ? "selected" : "")>Aktivna</option>
+                            <option value="otkazana" @(Request["searchStatus"]?.ToString() == "otkazana" ? "selected" : "")>Otkazana</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="sort" class="form-select form-select-sm">
+                            <option value="">-- Sortiraj --</option>
+                            <option value="nazivAsc" @(Request["sort"]?.ToString() == "nazivAsc" ? "selected" : "")>Naziv (A-Z)</option>
+                            <option value="nazivDesc" @(Request["sort"]?.ToString() == "nazivDesc" ? "selected" : "")>Naziv (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-success btn-sm">Primeni</button>
+                    <a href="@Url.Action("Index","Rezervacija")" class="btn btn-secondary btn-sm">Resetuj</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Tabela rezervacija -->
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Aranžman</th>
+                    <th>Status</th>
+                    <th>Početak</th>
+                    <th>Kraj</th>
+                    <th>Jedinica</th>
+                    <th>Akcija</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var r in Model)
+                    {
+                        var a = aranzmani?.FirstOrDefault(x => x.Sifra == r.AranzmanId);
+                        var jed = jedinice?.FirstOrDefault(x => x.JedinicaId == r.SmestajnaJedinicaId);
+
+                        string statusText = r.Status.ToString();
+                        string lowerStatus = statusText.ToLower();
+                        string badgeClass = lowerStatus.Contains("aktivna") ? "success"
+                                                : lowerStatus.Contains("otkazana") ? "danger" : "secondary";
+
+                        bool prosao = a != null && a.DatumZavrsetka <= DateTime.Now;
+
+                        <tr>
+                            <td class="fw-bold">@r.RezervacijaId</td>
+                            <td>
+                                <div>@(a?.Naziv ?? "—")</div>
+                                <small class="text-muted">@a?.Opis</small>
+                            </td>
+                            <td><span class="badge bg-@badgeClass">@statusText</span></td>
+                            <td>@(a != null ? a.DatumPocetka.ToString("dd/MM/yyyy") : "—")</td>
+                            <td>@(a != null ? a.DatumZavrsetka.ToString("dd/MM/yyyy") : "—")</td>
+                            <td>
+                                @if (jed != null)
+                                {
+                                    <div>Kapacitet: @jed.BrojGostiju</div>
+                                    <div>Cena: @jed.Cena €</div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Nije pronađena</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-primary mb-1"
+                                   href="@Url.Action("Detalji","Rezervacija", new { id = r.RezervacijaId })">Detalji</a>
+
+                                @if (!prosao && !lowerStatus.Contains("otkazan"))
+                                {
+                                    <a class="btn btn-sm btn-danger mb-1"
+                                       href="@Url.Action("Otkazi","Rezervacija", new { id = r.RezervacijaId })">Otkaži</a>
+                                }
+                                else if (prosao)
+                                {
+                                    <small class="text-muted">Ne može se otkazati</small>
+                                }
+
+                                @if (jeMenadzer)
+                                {
+                                    <a class="btn btn-sm btn-success mb-1"
+                                       href="@Url.Action("Create","Rezervacija", new { aranzmanId = r.AranzmanId, smestajId = jed?.SmestajId, jedinicaId = r.SmestajnaJedinicaId })">
+                                        Rezerviši za gosta
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="7" class="text-center text-muted">Nema rezervacija.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

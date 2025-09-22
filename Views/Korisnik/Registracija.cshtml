@@ -1,0 +1,89 @@
+﻿@model WebAranzmani.Models.KorisnikInfo
+@{
+    ViewBag.Title = "Registracija";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height:80vh;">
+    <div class="card shadow-lg p-4" style="width:500px; border-radius:16px; background:#f9fafb;">
+        <h3 class="text-center mb-4 fw-bold text-success">📝 Registracija novog korisnika</h3>
+
+        @using (Html.BeginForm("Registracija", "Korisnik", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label class="form-label">Ime</label>
+                @Html.TextBoxFor(m => m.Ime, new { @class = "form-control", placeholder = "Unesite ime", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prezime</label>
+                @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control", placeholder = "Unesite prezime", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Pol</label>
+                @Html.DropDownListFor(m => m.Pol, new SelectList(new[] { "Muški", "Ženski" }), "-- Izaberite pol --", new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "primer@mail.com", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Datum rođenja</label>
+                <input type="date" name="DatumRodjenja" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Korisničko ime</label>
+                @Html.TextBoxFor(m => m.KorisnickoIme, new { @class = "form-control", placeholder = "Unesite korisničko ime", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lozinka</label>
+                @Html.PasswordFor(m => m.Lozinka, new { @class = "form-control", placeholder = "Unesite lozinku", required = "required", id = "Lozinka" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Potvrda lozinke</label>
+                <input type="password" id="PotvrdaLozinke" class="form-control" placeholder="Ponovo unesite lozinku" required />
+                <small id="passwordHelp" class="text-danger d-none">❌ Lozinke se ne poklapaju.</small>
+            </div>
+
+            if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-center">@ViewBag.Error</div>
+            }
+
+            <button type="submit" id="btnSubmit" class="btn btn-success w-100">Registruj se</button>
+        }
+
+        <div class="text-center mt-3">
+            <small>Već imate nalog? <a href="@Url.Action("Prijava","Korisnik")">Prijavite se</a></small>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const lozinka = document.getElementById("Lozinka");
+        const potvrda = document.getElementById("PotvrdaLozinke");
+        const help = document.getElementById("passwordHelp");
+        const submitBtn = document.getElementById("btnSubmit");
+
+        function checkPasswords() {
+            if (lozinka.value !== potvrda.value) {
+                help.classList.remove("d-none");
+                submitBtn.disabled = true;
+            } else {
+                help.classList.add("d-none");
+                submitBtn.disabled = false;
+            }
+        }
+
+        lozinka.addEventListener("input", checkPasswords);
+        potvrda.addEventListener("input", checkPasswords);
+    });
+</script>

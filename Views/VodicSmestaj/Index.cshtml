@@ -1,0 +1,178 @@
+﻿@model IEnumerable<WebAranzmani.Models.SmestajInfo>
+@{
+    ViewBag.Title = "Smeštaji - Menadžer";
+}
+
+<style>
+    :root {
+        --bg1: #0f172a;
+        --bg2: #1e293b;
+        --panel: #1e293b;
+        --accent: #3b82f6;
+        --accent2: #38bdf8;
+        --danger: #ef4444;
+        --success: #22c55e;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--bg1), var(--bg2));
+        color: #e2e8f0;
+    }
+
+    h2 {
+        font-weight: 800;
+        background: linear-gradient(90deg, #60a5fa, #a5f3fc);
+        -webkit-background-clip: text;
+        color: transparent;
+        margin-bottom: 25px;
+    }
+
+    .table-wrap {
+        background: rgba(255,255,255,.05);
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.1);
+        overflow: hidden;
+        box-shadow: 0 10px 28px rgba(0,0,0,.3);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        color: #fff;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    tbody tr:hover {
+        background: rgba(255,255,255,.07);
+    }
+
+    .btn {
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    .btn-sm {
+        padding: 4px 10px;
+    }
+
+    .btn-edit {
+        background: linear-gradient(90deg, #3b82f6, #38bdf8);
+        color: #fff;
+        border: none;
+    }
+
+    .btn-del {
+        background: var(--danger);
+        color: #fff;
+        border: none;
+    }
+
+    .btn-add {
+        background: var(--success);
+        color: #fff;
+        border: none;
+    }
+
+    .filter-bar {
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center">📋 Upravljanje smeštajima</h2>
+
+    @if (TempData["OK"] != null)
+    {
+        <div class="alert alert-success">@TempData["OK"]</div>
+    }
+    @if (TempData["ERR"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ERR"]</div>
+    }
+
+    <div class="filter-bar">
+        @using (Html.BeginForm("Index", "VodicSmestaj", FormMethod.Get))
+        {
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <input type="text" name="q" value="@ViewBag.Q" class="form-control" placeholder="🔍 Pretraga po nazivu" />
+                </div>
+                <div class="col-md-2">
+                    <select name="sort" class="form-select">
+                        <option value="">-- Sortiraj --</option>
+                        <option value="nazivAsc" @(ViewBag.Sort=="nazivAsc"?"selected":"")>Naziv ↑</option>
+                        <option value="nazivDesc" @(ViewBag.Sort=="nazivDesc"?"selected":"")>Naziv ↓</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check text-light">
+                        <input type="checkbox" name="samoMoji" class="form-check-input" @(ViewBag.SamoMoji==true?"checked":"") />
+                        <label class="form-check-label">Samo moji</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check text-light">
+                        <input type="checkbox" name="prikaziObrisane" class="form-check-input" @(ViewBag.PrikaziObrisane==true?"checked":"") />
+                        <label class="form-check-label">Prikaži obrisane</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100">Primeni</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mb-3 text-end">
+        <a href="@Url.Action("Kreiraj")" class="btn btn-add">➕ Dodaj novi smeštaj</a>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Naziv</th>
+                    <th>Tip</th>
+                    <th>Zvezdice</th>
+                    <th>Bazen</th>
+                    <th>Obrisan</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.SmestajId</td>
+                        <td>@s.Naziv</td>
+                        <td>@s.Vrsta</td>
+                        <td>@s.Zvezdice</td>
+                        <td>@(s.Bazen ? "Da" : "Ne")</td>
+                        <td>@(s.Obrisano ? "Da" : "Ne")</td>
+                        <td>
+                            <a href="@Url.Action("Izmeni", new { id = s.SmestajId })" class="btn btn-sm btn-edit">✏️</a>
+                            @using (Html.BeginForm("Obrisi", "VodicSmestaj", new { id = s.SmestajId }, FormMethod.Post, new { onsubmit = "return confirm('Obrisati smeštaj?')" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-del">🗑️</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

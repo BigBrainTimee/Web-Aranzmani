@@ -1,0 +1,102 @@
+﻿@model WebAranzmani.Models.RezervacijaInfo
+@using WebAranzmani.Repositories
+
+@{
+    ViewBag.Title = "Detalji rezervacije";
+    var arRepo = new AranzmaniRepozitorijum();
+    var ar = arRepo.PronadjiPoId(Model.AranzmanId);
+
+    string st = Model.Status.ToString();
+    string lower = st.ToLowerInvariant();
+    string badge = lower.Contains("aktiv") ? "success"
+               : lower.Contains("otkaz") ? "danger"
+               : "secondary";
+}
+
+<style>
+    :root {
+        --c-deep: #0b2447;
+        --c-mid: #0e7490;
+        --c-sky: #22d3ee;
+        --glass: rgba(255,255,255,.08);
+        --stroke: rgba(255,255,255,.18);
+        --txt: #f8fafc;
+        --dim: #cfe7f2;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, var(--c-deep) 0%, #0a3a5a 35%, var(--c-mid) 68%, var(--c-sky) 110%);
+        color: var(--txt);
+    }
+
+    .glass {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: 18px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    }
+
+    .page-title {
+        font-weight: 800;
+        background: linear-gradient(90deg,#fff,#e9f8ff 45%,#fff);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 20px rgba(34,211,238,.15);
+    }
+
+    .badge {
+        padding: .45em .6em;
+        font-weight: 800;
+        border-radius: 999px;
+    }
+
+        .badge.bg-success {
+            background: linear-gradient(90deg,#16a34a,#22c55e) !important;
+            color: #052a37 !important;
+        }
+
+        .badge.bg-danger {
+            background: linear-gradient(90deg,#ef4444,#f97316) !important;
+            color: #fff !important;
+        }
+
+        .badge.bg-secondary {
+            background: linear-gradient(90deg,#64748b,#94a3b8) !important;
+            color: #051821 !important;
+        }
+
+    dl.row dt {
+        color: var(--dim);
+    }
+</style>
+
+<div class="container my-4 narrow">
+    <div class="glass p-4 p-md-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+            <h2 class="page-title">Detalji rezervacije #@Model.RezervacijaId</h2>
+            <span class="badge bg-@badge">@st</span>
+        </div>
+        <p class="muted mb-4">Pregled podataka o rezervaciji.</p>
+
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Turista</dt>
+            <dd class="col-sm-8">@Model.Turista</dd>
+
+            <dt class="col-sm-4">Aranžman</dt>
+            <dd class="col-sm-8">@(ar == null ? ("ID: " + Model.AranzmanId) : ar.Naziv)</dd>
+
+            <dt class="col-sm-4">Smeštajna jedinica</dt>
+            <dd class="col-sm-8">#@Model.SmestajnaJedinicaId</dd>
+
+            <dt class="col-sm-4">Status</dt>
+            <dd class="col-sm-8"><span class="badge bg-@badge">@st</span></dd>
+        </dl>
+
+        <div class="mt-4 d-flex gap-2">
+            @Html.ActionLink("Nazad", "Index", "VodicRezervacija", null, new { @class = "btn btn-outline-secondary btn-lg" })
+        </div>
+    </div>
+</div>
+

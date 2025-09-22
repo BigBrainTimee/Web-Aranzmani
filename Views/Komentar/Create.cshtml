@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Ostavi komentar";
+}
+
+<div class="container my-5" style="max-width:800px;">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-info bg-gradient text-dark fw-bold">
+            ✏️ Ostavi komentar
+        </div>
+        <div class="card-body">
+
+            @if (TempData["Poruka"] != null)
+            {
+                <div class="alert alert-success">@TempData["Poruka"]</div>
+            }
+
+            @using (Html.BeginForm("Create", "Komentar", FormMethod.Post, new { @class = "needs-validation" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("smestajNaziv", (string)ViewBag.SmestajNaziv)
+
+                <div class="mb-3">
+                    <label class="form-label">Tekst komentara</label>
+                    <textarea name="sadrzaj" class="form-control" rows="4" required placeholder="Podeli svoje iskustvo…"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ocena</label>
+                    <select name="ocena" class="form-select">
+                        <option value="5">★★★★★ (5)</option>
+                        <option value="4">★★★★☆ (4)</option>
+                        <option value="3" selected>★★★☆☆ (3)</option>
+                        <option value="2">★★☆☆☆ (2)</option>
+                        <option value="1">★☆☆☆☆ (1)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">💾 Sačuvaj</button>
+            }
+        </div>
+    </div>
+</div>

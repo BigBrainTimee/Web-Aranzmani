@@ -1,0 +1,63 @@
+[
+  {
+    "KorisnickoIme": "admin123",
+    "Blokiran": false,
+    "Lozinka": "admin1",
+    "Ime": "Milos",
+    "Prezime": "Jovanovic",
+    "Pol": "M",
+    "Email": "admin@test.com",
+    "Uloga": 0,
+    "DatumRodjenja": "01/01/1990",
+    "Rola": 0,
+    "Rezervacije": [],
+    "KreiraniAranzmani": []
+  },
+  {
+    "KorisnickoIme": "menadzer123",
+    "Blokiran": false,
+    "Lozinka": "men1",
+    "Ime": "Jelena",
+    "Prezime": "Janković",
+    "Pol": "Ženski",
+    "Email": "jelena@test.com",
+    "Uloga": 1,
+    "DatumRodjenja": "21/03/2000",
+    "Rola": 0,
+    "Rezervacije": [],
+    "KreiraniAranzmani": [
+      2,
+      4,
+      6,
+      1
+    ]
+  },
+  {
+    "KorisnickoIme": "turista1",
+    "Blokiran": false,
+    "Lozinka": "tur123",
+    "Ime": "Marko",
+    "Prezime": "Marković",
+    "Pol": "M",
+    "Email": "marko@test.com",
+    "Uloga": 2,
+    "DatumRodjenja": "20/03/2000",
+    "Rola": 0,
+    "Rezervacije": [],
+    "KreiraniAranzmani": []
+  },
+  {
+    "KorisnickoIme": "milos123",
+    "Blokiran": false,
+    "Lozinka": "milos",
+    "Ime": "Milos",
+    "Prezime": "Jovanovic",
+    "Pol": "Muški",
+    "Email": "milos@gmail.com",
+    "Uloga": 2,
+    "DatumRodjenja": "07/06/2003",
+    "Rola": 0,
+    "Rezervacije": [],
+    "KreiraniAranzmani": []
+  }
+]

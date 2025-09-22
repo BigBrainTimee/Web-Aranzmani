@@ -1,0 +1,118 @@
+[
+  {
+    "Sifra": 1,
+    "Naziv": "Rim – Koloseum i Vatikan",
+    "Paket": 0,
+    "VrstaPrevoza": 0,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "10/04/2025",
+    "DatumZavrsetka": "15/04/2025",
+    "BrojPutnika": 40,
+    "Opis": "Upoznajte večni grad Rim uz obilazak Koloseuma i Vatikana.",
+    "Plan": "Dan 1 – Dolazak i večera; Dan 2 – Koloseum i Forum Romanum; Dan 3 – Vatikan i Sikstinska kapela; Dan 4 – Slobodno vreme; Dan 5 – Povratak.",
+    "Poster": "rim.jpg",
+    "ListaSmestaja": [
+      1
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  },
+  {
+    "Sifra": 2,
+    "Naziv": "Barselona – Gaudijeva umetnost",
+    "Paket": 0,
+    "VrstaPrevoza": 0,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "12/05/2025",
+    "DatumZavrsetka": "18/05/2025",
+    "BrojPutnika": 35,
+    "Opis": "Posetite Sagradu Familiju, Park Güell i šetalište La Rambla.",
+    "Plan": "Dan 1 – Dolazak; Dan 2 – Gaudijeva dela; Dan 3 – Montjuïc i more; Dan 4 – Slobodan dan; Dan 5 – Povratak.",
+    "Poster": "barselona.jpg",
+    "ListaSmestaja": [
+      2,
+      8,
+      9
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  },
+  {
+    "Sifra": 3,
+    "Naziv": "Dubai – Grad budućnosti",
+    "Paket": 3,
+    "VrstaPrevoza": 3,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "20/06/2025",
+    "DatumZavrsetka": "27/06/2025",
+    "BrojPutnika": 49,
+    "Opis": "Doživite luksuz Dubaija – Burj Khalifa, Dubai Mall i pustinjski safari.",
+    "Plan": "Dan 1 – Dolazak; Dan 2 – Burj Khalifa i fontane; Dan 3 – Safari; Dan 4 – Plaže; Dan 5 – Slobodno; Dan 6 – Povratak.",
+    "Poster": "dubai.jpg",
+    "ListaSmestaja": [
+      3
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  },
+  {
+    "Sifra": 4,
+    "Naziv": "Santorini – Ostrvo zalazaka sunca",
+    "Paket": 4,
+    "VrstaPrevoza": 2,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "05/07/2025",
+    "DatumZavrsetka": "12/07/2025",
+    "BrojPutnika": 25,
+    "Opis": "Romantično putovanje na ostrvo sa belim kućicama i plavim krovovima.",
+    "Plan": "Dan 1 – Dolazak; Dan 2 – Obilazak Oie i Fira; Dan 3 – Vulkan i krater; Dan 4 – Plaže; Dan 5 – Slobodno vreme; Dan 6 – Povratak.",
+    "Poster": "santorini.jpg",
+    "ListaSmestaja": [
+      4
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  },
+  {
+    "Sifra": 5,
+    "Naziv": "Beč – Carski grad",
+    "Paket": 2,
+    "VrstaPrevoza": 0,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "15/03/2025",
+    "DatumZavrsetka": "19/03/2025",
+    "BrojPutnika": 44,
+    "Opis": "Posetite dvorac Schönbrunn, Bečku operu i Prater.",
+    "Plan": "Dan 1 – Dolazak; Dan 2 – Schönbrunn; Dan 3 – Bečka opera i muzej; Dan 4 – Povratak.",
+    "Poster": "bec.jpg",
+    "ListaSmestaja": [
+      5
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  },
+  {
+    "Sifra": 6,
+    "Naziv": "Istanbul – Dva kontinenta",
+    "Paket": 1,
+    "VrstaPrevoza": 1,
+    "VrstaLokacije": 0,
+    "DatumPocetka": "01/09/2025",
+    "DatumZavrsetka": "06/09/2025",
+    "BrojPutnika": 60,
+    "Opis": "Obilazak Aja Sofije, Plave džamije i Velikog bazara.",
+    "Plan": "Dan 1 – Dolazak; Dan 2 – Aja Sofija i Plava džamija; Dan 3 – Topkapi; Dan 4 – Bosfor; Dan 5 – Slobodno vreme; Dan 6 – Povratak.",
+    "Poster": "istanbul.jpg",
+    "ListaSmestaja": [
+      6
+    ],
+    "Smestaji": [],
+    "Obrisano": false,
+    "Menadzer": ""
+  }
+]
