@@ -27,13 +27,13 @@ namespace WebAranzmani.Controllers
         {
             var aranzmani = _aranzmaniRepo.PronadjiSve();
 
-            // Pretraga po nazivu
+
             if (!string.IsNullOrWhiteSpace(naziv))
                 aranzmani = aranzmani
                     .Where(a => a.Naziv.IndexOf(naziv, StringComparison.OrdinalIgnoreCase) >= 0)
                     .ToList();
 
-            // Filtriranje po prevozu
+  
             Prevoz prevoz;
             if (!string.IsNullOrWhiteSpace(tipPrevoza) &&
                 Enum.TryParse(tipPrevoza, true, out prevoz))
@@ -43,7 +43,7 @@ namespace WebAranzmani.Controllers
                     .ToList();
             }
 
-            // Filtriranje po paketu
+
             TipPaketa paket;
             if (!string.IsNullOrWhiteSpace(tipAranzmana) &&
                 Enum.TryParse(tipAranzmana, true, out paket))
@@ -53,7 +53,7 @@ namespace WebAranzmani.Controllers
                     .ToList();
             }
 
-            // Filtriranje po datumima
+
             if (datumOd.HasValue)
                 aranzmani = aranzmani
                     .Where(a => a.DatumPocetka >= datumOd.Value)
@@ -74,7 +74,7 @@ namespace WebAranzmani.Controllers
                     .Where(a => a.DatumZavrsetka <= krajDo.Value)
                     .ToList();
 
-            // Sortiranje
+
             switch (sort)
             {
                 case "nazivAsc":
@@ -103,21 +103,19 @@ namespace WebAranzmani.Controllers
             return View(aranzmani);
         }
 
-        // ABOUT
         public ActionResult About()
         {
             ViewBag.Message = "Ova aplikacija služi za pregled, filtriranje i rezervaciju aranžmana.";
             return View();
         }
 
-        // CONTACT
         public ActionResult Contact()
         {
             ViewBag.Message = "Kontakt strana aplikacije.";
             return View();
         }
 
-        // DETALJI - pojedinačan aranžman sa smeštajima i komentarima
+        
         public ActionResult Detalji(string naziv)
         {
             if (string.IsNullOrWhiteSpace(naziv))
@@ -138,7 +136,6 @@ namespace WebAranzmani.Controllers
                     var smestaj = _smestajiRepo.PronadjiPoId(smId);
                     if (smestaj == null) continue;
 
-                    // ✅ Napuni jedinice preko liste ID-jeva
                     smestaj.SmestajneJedinice = smestaj.Jedinice
                         .Select(jid => _jediniceRepo.PronadjiPoId(jid))
                         .Where(j => j != null)
