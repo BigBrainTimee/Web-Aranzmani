@@ -14,7 +14,6 @@ namespace WebAranzmani.Controllers
         private readonly SmestajiRepozitorijum _smestajiRepo = new SmestajiRepozitorijum();
         private readonly JediniceRepozitorijum _jediniceRepo = new JediniceRepozitorijum();
 
-        // INDEX - pretraga + filtriranje + sortiranje
         public ActionResult Index(
             string naziv,
             string tipPrevoza,

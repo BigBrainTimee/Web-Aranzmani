@@ -36,7 +36,7 @@ namespace WebAranzmani.Controllers
                     var smestaj = _smestajiRepo.PronadjiPoId(smId);
                     if (smestaj == null) continue;
 
-                    // učitaj sve jedinice
+
                     smestaj.SmestajneJedinice = smestaj.Jedinice
                         .Select(jid => _jediniceRepo.PronadjiPoId(jid))
                         .Where(j => j != null)
@@ -47,7 +47,7 @@ namespace WebAranzmani.Controllers
             }
 
             ViewBag.Smestaji = smestaji;
-            return View(ar); // ovo sada ide na ~/Views/Aranzman/Detalji.cshtml
+            return View(ar);
         }
 
         public ActionResult Kreiraj()
