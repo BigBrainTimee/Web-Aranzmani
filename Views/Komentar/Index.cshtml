@@ -2,9 +2,10 @@
 @using WebAranzmani.Models
 
 @{
-    ViewBag.Title = "Komentari na odobravanje";
+    ViewBag.Title = "Komentari";
     var korisnik = Session["Korisnik"] as KorisnikInfo;
     bool jeMenadzer = korisnik != null && korisnik.Uloga == Uloga.Menadzer;
+    bool jeTurista = korisnik != null && korisnik.Uloga == Uloga.Turista;
 }
 
 <style>
@@ -39,6 +40,21 @@
     <div class="glass p-4">
         <h3 class="fw-bold mb-4">💬 Komentari na odobravanje</h3>
 
+        @if (jeMenadzer)
+        {
+            <h3 class="fw-bold mb-4">⏳ Komentari na odobravanje</h3>
+            <p class="text-muted mb-4">Ovo su komentari koji čekaju vaše odobrenje. Odobrite ih da budu javni ili ih odbijte da se trajno uklone.</p>
+        }
+        else if (jeTurista)
+        {
+            <h3 class="fw-bold mb-4">💬 Moji komentari</h3>
+            <p class="text-muted mb-4">Ovo su svi komentari koje ste ostavili. Komentari na čekanju će biti javni nakon odobrenja menadžera.</p>
+        }
+        else
+        {
+            <h3 class="fw-bold mb-4">💬 Svi komentari</h3>
+        }
+
         @if (TempData["OK"] != null)
         {
             <div class="alert alert-success">@TempData["OK"]</div>
@@ -56,6 +72,10 @@
                         <th>Smeštaj</th>
                         <th>Tekst</th>
                         <th>Ocena</th>
+                        @if (!jeMenadzer)
+                        {
+                            <th>Status</th>
+                        }
                         @if (jeMenadzer)
                         {
                             <th>Akcije</th>
@@ -67,11 +87,24 @@
                     {
                         foreach (var k in Model)
                         {
-                            <tr class="table-warning">
+                            <tr class="@(k.Prihvacen ? "table-success" : "table-warning")">
                                 <td>@k.Turista</td>
                                 <td>@k.SmestajNaziv</td>
                                 <td>@k.Sadrzaj</td>
                                 <td class="rating">@k.Ocena/5</td>
+                                @if (!jeMenadzer)
+                                {
+                                    <td>
+                                        @if (k.Prihvacen)
+                                        {
+                                            <span class="badge bg-success">✅ Odobren</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning">⏳ Na čekanju</span>
+                                        }
+                                    </td>
+                                }
                                 @if (jeMenadzer)
                                 {
                                     <td>
@@ -80,7 +113,7 @@
                                             {
                                                 @Html.AntiForgeryToken()
                                                 @Html.Hidden("id", k.KomentarId)
-                                                <button type="submit" class="btn btn-success btn-sm">
+                                                <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Odobriti komentar?')">
                                                     ✅ Odobri
                                                 </button>
                                             }
@@ -88,7 +121,7 @@
                                             {
                                                 @Html.AntiForgeryToken()
                                                 @Html.Hidden("id", k.KomentarId)
-                                                <button type="submit" class="btn btn-danger btn-sm" @(k.Prihvacen ? "" : "")>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Odbij komentar? Komentar će biti trajno obrisan!')">
                                                     ❌ Odbij
                                                 </button>
 
@@ -102,8 +135,19 @@
                     else
                     {
                         <tr>
-                            <td colspan="@(jeMenadzer ? 5 : 4)" class="text-center text-muted fst-italic">
-                                Nema komentara za pregled.
+                            <td colspan="@(jeMenadzer ? 5 : 5)" class="text-center text-muted fst-italic">
+                                @if (jeMenadzer)
+                                {
+                                    <text>Nema komentara na čekanju.</text>
+                                }
+                                else if (jeTurista)
+                                {
+                                    <text>Nema komentara.</text>
+                                }
+                                else
+                                {
+                                    <text>Nema komentara za pregled.</text>
+                                }
                             </td>
                         </tr>
                     }
