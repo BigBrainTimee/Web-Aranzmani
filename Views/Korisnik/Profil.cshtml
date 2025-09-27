@@ -119,8 +119,10 @@
             <div class="col-md-6">
                 @Html.LabelFor(m => m.DatumRodjenja, "Datum rođenja")
                 @Html.TextBoxFor(m => m.DatumRodjenja,
-             "{0:dd/MM/yyyy}",
-             new { @class = "form-control", placeholder = "dd/MM/yyyy" })
+                    new { @class = "form-control", type = "date",
+                        value = Model.DatumRodjenja.ToString("yyyy-MM-dd")
+                    })
+
 
 
             </div>

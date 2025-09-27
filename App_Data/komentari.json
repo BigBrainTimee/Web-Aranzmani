@@ -16,14 +16,6 @@
     "Prihvacen": true
   },
   {
-    "KomentarId": 3,
-    "Turista": "turista1",
-    "SmestajNaziv": "Barcelona Hostel",
-    "Sadrzaj": "Mala soba ali odlična lokacija.",
-    "Ocena": 3,
-    "Prihvacen": false
-  },
-  {
     "KomentarId": 4,
     "Turista": "turista1",
     "SmestajNaziv": "Maldives Paradise Resort",
@@ -53,7 +45,7 @@
     "SmestajNaziv": "Maldives Paradise Resort",
     "Sadrzaj": "dsadas",
     "Ocena": 3,
-    "Prihvacen": false
+    "Prihvacen": true
   },
   {
     "KomentarId": 8,
@@ -61,7 +53,7 @@
     "SmestajNaziv": "Maldives Paradise Resort",
     "Sadrzaj": "dadasgd",
     "Ocena": 3,
-    "Prihvacen": false
+    "Prihvacen": true
   },
   {
     "KomentarId": 9,
