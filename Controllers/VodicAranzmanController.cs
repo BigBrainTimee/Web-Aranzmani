@@ -97,7 +97,7 @@ namespace WebAranzmani.Controllers
                 var fileName = Path.GetFileName(PosterFile.FileName);
                 var path = Path.Combine(Server.MapPath("~/Content/Images"), fileName);
                 PosterFile.SaveAs(path);
-                form.Poster = "~/Content/Images/" + fileName;
+                form.Poster = fileName;
             }
             else
             {
