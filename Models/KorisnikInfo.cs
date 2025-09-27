@@ -6,7 +6,7 @@ using WebAranzmani.Service;
 
 namespace WebAranzmani.Models
 {
-    public enum Uloga { Admin = 0, Menadzer = 1, Turista= 2 }
+    public enum Uloga { Admin = 0, Menadzer = 1, Turista = 2 }
 
 
     public class KorisnikInfo

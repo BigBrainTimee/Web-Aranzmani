@@ -29,6 +29,14 @@ namespace WebAranzmani.Models
         public string Plan { get; set; } = string.Empty;
         public string Poster { get; set; } = string.Empty;
 
+        // ➕ Dodato alias svojstvo
+        [JsonIgnore]
+        public string Slika
+        {
+            get => Poster;
+            set => Poster = value;
+        }
+
         [JsonProperty("ListaSmestaja")]
         public List<int> ListaSmestaja { get; set; } = new List<int>();
 

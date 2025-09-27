@@ -37,7 +37,7 @@ namespace WebAranzmani.Models
 
         public override string ToString()
         {
-            return $"Jedinica {JedinicaId} - {BrojGostiju} gostiju, {Cena} RSD";
+            return $"Jedinica {JedinicaId} - {BrojGostiju} gostiju, {Cena} EUR";
         }
 
 
