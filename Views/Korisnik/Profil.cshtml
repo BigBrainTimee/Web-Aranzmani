@@ -95,45 +95,45 @@
     {
         @Html.AntiForgeryToken()
 
-<div class="row g-3">
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.KorisnickoIme)
-        @Html.TextBoxFor(m => m.KorisnickoIme, new { @class = "form-control" })
-    </div>
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-    </div>
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.Ime)
-        @Html.TextBoxFor(m => m.Ime, new { @class = "form-control" })
-    </div>
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.Prezime)
-        @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control" })
-    </div>
-    <div class="col-md-6">
-        @Html.Label("Lozinka (opciono)")
-        @Html.PasswordFor(m => m.Lozinka, new { @class = "form-control" })
-    </div>
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.DatumRodjenja, "Datum rođenja")
-        @Html.TextBoxFor(m => m.DatumRodjenja,
-     "{0:dd/MM/yyyy}",
-     new { @class = "form-control", placeholder = "dd/MM/yyyy" })
+        <div class="row g-3">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.KorisnickoIme)
+                @Html.TextBoxFor(m => m.KorisnickoIme, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Ime)
+                @Html.TextBoxFor(m => m.Ime, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Prezime)
+                @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Lozinka (opciono)")
+                @Html.PasswordFor(m => m.Lozinka, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.DatumRodjenja, "Datum rođenja")
+                @Html.TextBoxFor(m => m.DatumRodjenja,
+             "{0:dd/MM/yyyy}",
+             new { @class = "form-control", placeholder = "dd/MM/yyyy" })
 
 
-    </div>
+            </div>
 
 
-    <div class="col-md-6">
-        @Html.LabelFor(m => m.Pol, "Pol")
-        @Html.DropDownListFor(m => m.Pol,
-            new SelectList(new[] { "Muški", "Ženski" }, Model.Pol),
-            "-- Izaberi pol --",
-            new { @class = "form-select" })
-    </div>
-</div>
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.Pol, "Pol")
+                @Html.DropDownListFor(m => m.Pol,
+                    new SelectList(new[] { "Muški", "Ženski" }, Model.Pol),
+                    "-- Izaberi pol --",
+                    new { @class = "form-select" })
+            </div>
+        </div>
 
         <div class="mt-4">
             <button type="submit" class="btn btn-primary w-100">Sačuvaj izmene</button>

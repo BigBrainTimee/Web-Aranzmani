@@ -130,7 +130,14 @@
                 @if (!string.IsNullOrEmpty(Model.Poster))
                 {
                     <div class="mb-2">
-                        <img src="@Url.Content(Model.Poster)" alt="Poster" style="max-height:180px;border-radius:12px;" />
+                        @{
+                            var posterPath = Model.Poster;
+                            if (!posterPath.StartsWith("~/Content/Images"))
+                            {
+                                posterPath = "~/Content/Images/" + posterPath;
+                            }
+                        }
+                        <img src="@Url.Content(posterPath)" alt="Poster" style="max-height:180px;border-radius:12px;" />
                     </div>
                 }
                 <input type="file" name="PosterFile" class="form-control" />
