@@ -126,12 +126,13 @@
 </style>
 
 <div class="container my-4">
-    <h2 class="page-title">Komentari (vodič)</h2>
+    <h2 class="page-title">⏳ Komentari na odobravanje</h2>
+    <p class="muted mb-3">Ovo su komentari koji čekaju vaše odobrenje. Odobrite ih da budu javni ili ih odbijte da se trajno uklone.</p>
 
     @using (Html.BeginForm("Index", "VodicKomentar", FormMethod.Get, new { @class = "mb-3" }))
     {
         <div class="filter-bar glass">
-            <input type="checkbox" id="samoNeprihvaceni" name="samoNeprihvaceni" value="true" @((ViewBag.SamoNeprihvaceni ?? false) ? "checked" : "") />
+            <input type="checkbox" id="samoNeprihvaceni" name="samoNeprihvaceni" value="true" @((ViewBag.SamoNeprihvaceni ?? true) ? "checked" : "") />
             <label for="samoNeprihvaceni">Samo neprihvaćeni</label>
             <button class="btn btn-primary btn-sm ms-auto">Primeni</button>
         </div>
@@ -180,13 +181,13 @@
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.Hidden("id", k.KomentarId)
-                                        <button class="btn btn-success btn-sm me-1">Odobri</button>
+                                        <button class="btn btn-success btn-sm me-1" onclick="return confirm('Odobriti komentar?')">✅ Odobri</button>
                                     }
                                     @using (Html.BeginForm("Odbij", "VodicKomentar", FormMethod.Post, new { @class = "d-inline" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         @Html.Hidden("id", k.KomentarId)
-                                        <button class="btn btn-danger btn-sm">Odbij</button>
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Odbij komentar? Komentar će biti trajno obrisan!')">❌ Odbij</button>
                                     }
                                 </td>
                             </tr>
@@ -195,7 +196,16 @@
                     else
                     {
                         <tr>
-                            <td colspan="6" class="text-center muted py-4">Nema komentara za prikaz.</td>
+                            <td colspan="6" class="text-center muted py-4">
+                                @if (ViewBag.SamoNeprihvaceni ?? true)
+                                {
+                                    <text>Nema komentara na čekanju.</text>
+                                }
+                                else
+                                {
+                                    <text>Nema komentara za prikaz.</text>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>

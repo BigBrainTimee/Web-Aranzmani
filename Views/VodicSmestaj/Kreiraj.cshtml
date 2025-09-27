@@ -13,8 +13,16 @@
         border: 1px solid rgba(255,255,255,.12);
         box-shadow: 0 10px 25px rgba(0,0,0,.25);
     }
-    .form-label { font-weight: 600; }
-    .btn-save { background: linear-gradient(90deg,#22c55e,#4ade80); border:none; color:#fff; }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .btn-save {
+        background: linear-gradient(90deg,#22c55e,#4ade80);
+        border: none;
+        color: #fff;
+    }
 </style>
 
 <div class="container my-5">
@@ -26,15 +34,15 @@
             @Html.AntiForgeryToken()
             <div class="mb-3">
                 @Html.LabelFor(m => m.Naziv, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control", placeholder="Naziv smeštaja" })
+                @Html.TextBoxFor(m => m.Naziv, new { @class = "form-control", placeholder = "Naziv smeštaja" })
             </div>
             <div class="mb-3">
                 @Html.LabelFor(m => m.Vrsta, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Vrsta, new { @class = "form-control", placeholder="Tip (hotel, vila...)" })
+                @Html.TextBoxFor(m => m.Vrsta, new { @class = "form-control", placeholder = "Tip (hotel, vila...)" })
             </div>
             <div class="mb-3">
                 @Html.LabelFor(m => m.Zvezdice, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Zvezdice, new { @class = "form-control", type="number", min="0", max="5" })
+                @Html.TextBoxFor(m => m.Zvezdice, new { @class = "form-control", type = "number", min = "0", max = "5" })
             </div>
             <div class="form-check mb-3">
                 @Html.CheckBoxFor(m => m.Bazen, new { @class = "form-check-input" })

@@ -112,19 +112,19 @@
                 <div class="col-md-2">
                     <select name="sort" class="form-select">
                         <option value="">-- Sortiraj --</option>
-                        <option value="nazivAsc" @(ViewBag.Sort=="nazivAsc"?"selected":"")>Naziv ↑</option>
-                        <option value="nazivDesc" @(ViewBag.Sort=="nazivDesc"?"selected":"")>Naziv ↓</option>
+                        <option value="nazivAsc" @(ViewBag.Sort == "nazivAsc" ? "selected" : "")>Naziv ↑</option>
+                        <option value="nazivDesc" @(ViewBag.Sort == "nazivDesc" ? "selected" : "")>Naziv ↓</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <div class="form-check text-light">
-                        <input type="checkbox" name="samoMoji" class="form-check-input" @(ViewBag.SamoMoji==true?"checked":"") />
+                        <input type="checkbox" name="samoMoji" class="form-check-input" @(ViewBag.SamoMoji == true ? "checked" : "") />
                         <label class="form-check-label">Samo moji</label>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-check text-light">
-                        <input type="checkbox" name="prikaziObrisane" class="form-check-input" @(ViewBag.PrikaziObrisane==true?"checked":"") />
+                        <input type="checkbox" name="prikaziObrisane" class="form-check-input" @(ViewBag.PrikaziObrisane == true ? "checked" : "") />
                         <label class="form-check-label">Prikaži obrisane</label>
                     </div>
                 </div>
@@ -163,6 +163,7 @@
                         <td>@(s.Bazen ? "Da" : "Ne")</td>
                         <td>@(s.Obrisano ? "Da" : "Ne")</td>
                         <td>
+                            <a href="@Url.Action("Index", "VodicJedinica", new { smestajId = s.SmestajId })" class="btn btn-sm btn-primary" title="Upravljaj jedinicama">🏠</a>
                             <a href="@Url.Action("Izmeni", new { id = s.SmestajId })" class="btn btn-sm btn-edit">✏️</a>
                             @using (Html.BeginForm("Obrisi", "VodicSmestaj", new { id = s.SmestajId }, FormMethod.Post, new { onsubmit = "return confirm('Obrisati smeštaj?')" }))
                             {
