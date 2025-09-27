@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WebAranzmani.Models;
 using WebAranzmani.Repositories;
@@ -13,10 +14,30 @@ namespace WebAranzmani.Controllers
         private readonly AranzmaniRepozitorijum _aranzmaniRepo = new AranzmaniRepozitorijum();
         private readonly RezervazcijeRepozitorijum _rezervacijeRepo = new RezervazcijeRepozitorijum();
 
+
+        private KorisnikInfo Curr()
+        {
+            var k = Session["Korisnik"] as KorisnikInfo;
+            if (k == null || k.Uloga != Uloga.Menadzer)
+                throw new HttpException(401, "❌ Samo menadžer može pristupiti ovde.");
+            return k;
+        }
+
+        private bool SmestajPripadaMeni(int smestajId, KorisnikInfo korisnik)
+        {
+            var aranzmani = _aranzmaniRepo.PronadjiSve()
+                .Where(a => a.Menadzer == korisnik.KorisnickoIme && !a.Obrisano)
+                .ToList();
+
+            return aranzmani.Any(a => a.ListaSmestaja != null && a.ListaSmestaja.Contains(smestajId));
+        }
         public ActionResult Index(int smestajId)
         {
+            var korisnik = Curr();
             var smestaj = _smestajiRepo.PronadjiPoId(smestajId);
             if (smestaj == null) return HttpNotFound();
+            if (!SmestajPripadaMeni(smestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš pristupiti samo jedinicama svojih smeštaja.");
 
             var jedinice = _jediniceRepo.PronadjiSve()
                                         .Where(j => !j.Obrisana && j.SmestajId == smestajId)
@@ -29,8 +50,11 @@ namespace WebAranzmani.Controllers
 
         public ActionResult Kreiraj(int smestajId)
         {
+            var korisnik = Curr();
             var smestaj = _smestajiRepo.PronadjiPoId(smestajId);
             if (smestaj == null) return HttpNotFound();
+            if (!SmestajPripadaMeni(smestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš dodavati jedinice samo u svoje smeštaje.");
 
             ViewBag.Smestaj = smestaj;
 
@@ -46,6 +70,9 @@ namespace WebAranzmani.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Kreiraj(SmestajnaJedinicaInfo form)
         {
+            var korisnik = Curr();
+            if (!SmestajPripadaMeni(form.SmestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš dodavati jedinice samo u svoje smeštaje.");
             var lista = _jediniceRepo.PronadjiSve();
             form.JedinicaId = lista.Any() ? lista.Max(j => j.JedinicaId) + 1 : 1;
             form.Obrisana = false;
@@ -70,8 +97,11 @@ namespace WebAranzmani.Controllers
 
         public ActionResult Izmeni(int id)
         {
+            var korisnik = Curr();
             var j = _jediniceRepo.PronadjiPoId(id);
             if (j == null) return HttpNotFound();
+            if (!SmestajPripadaMeni(j.SmestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš menjati samo jedinice svojih smeštaja.");
 
             ViewBag.Smestaj = _smestajiRepo.PronadjiPoId(j.SmestajId);
             return View(j);
@@ -80,8 +110,11 @@ namespace WebAranzmani.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Izmeni(SmestajnaJedinicaInfo form)
         {
+            var korisnik = Curr();
             var postojeca = _jediniceRepo.PronadjiPoId(form.JedinicaId);
             if (postojeca == null) return HttpNotFound();
+            if (!SmestajPripadaMeni(postojeca.SmestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš menjati samo jedinice svojih smeštaja.");
 
             bool blok = _rezervacijeRepo.PronadjiSve().Any(r =>
                 r.SmestajnaJedinicaId == postojeca.JedinicaId &&
@@ -108,8 +141,11 @@ namespace WebAranzmani.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Obrisi(int id)
         {
+            var korisnik = Curr();
             var j = _jediniceRepo.PronadjiPoId(id);
             if (j == null) return HttpNotFound();
+            if (!SmestajPripadaMeni(j.SmestajId, korisnik))
+                return new HttpUnauthorizedResult("❌ Možeš brisati samo jedinice svojih smeštaja.");
 
             bool blok = _rezervacijeRepo.PronadjiSve().Any(r =>
                 r.SmestajnaJedinicaId == j.JedinicaId &&

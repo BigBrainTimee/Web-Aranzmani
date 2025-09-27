@@ -24,13 +24,10 @@ namespace WebAranzmani.Controllers
 
         private HashSet<int> MojiAranzmani(KorisnikInfo korisnik)
         {
-            var set = new HashSet<int>();
-            if (korisnik.KreiraniAranzmani != null)
-            {
-                foreach (var id in korisnik.KreiraniAranzmani)
-                    set.Add(id);
-            }
-            return set;
+            return _aranzmaniRepo.PronadjiSve()
+                .Where(a => a.Menadzer == korisnik.KorisnickoIme)
+                .Select(a => a.Sifra)
+                .ToHashSet();
         }
 
         private bool KomentarNaMojSmestaj(KomentarInfo komentar, HashSet<int> moji)
@@ -44,7 +41,7 @@ namespace WebAranzmani.Controllers
                 .Any(a => moji.Contains(a.Sifra) && a.ListaSmestaja != null && a.ListaSmestaja.Contains(smestaj.SmestajId));
         }
 
-        public ActionResult Index(bool? samoNeprihvaceni = false)
+        public ActionResult Index(bool? samoNeprihvaceni = true)
         {
             var korisnik = Trenutni();
             var moji = MojiAranzmani(korisnik);
@@ -90,9 +87,9 @@ namespace WebAranzmani.Controllers
                 return new HttpUnauthorizedResult("Nemaš dozvolu.");
 
             komentar.Prihvacen = false;
-            _komentariRepo.Azuriraj(komentar);
+            _komentariRepo.Obrisi(id);
 
-            TempData["OK"] = "❌ Komentar je odbijen i vidljiv je samo menadžeru.";
+            TempData["OK"] = "❌ Komentar je odbijen i trajno uklonjen.";
             return RedirectToAction("Index");
         }
     }
