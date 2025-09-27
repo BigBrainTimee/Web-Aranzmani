@@ -12,13 +12,15 @@ namespace Aranzmani.Controllers
         private readonly KorisniciRepozitorijum _korisniciRepo = new KorisniciRepozitorijum();
         private readonly AranzmaniRepozitorijum _aranzmaniRepo = new AranzmaniRepozitorijum();
         private readonly KomentariRepozitorijum _komentariRepo = new KomentariRepozitorijum();
+
+        // GET: /Admin/
         public ActionResult Index()
         {
             var sviKorisnici = _korisniciRepo.PronadjiSve();
             return View(sviKorisnici);
         }
 
-
+        // Blokiranje korisnika
         public ActionResult Blokiraj(string korisnickoIme)
         {
             var korisnik = _korisniciRepo.PronadjiPoKorisnickomImenu(korisnickoIme);
@@ -36,7 +38,7 @@ namespace Aranzmani.Controllers
             return RedirectToAction("Index");
         }
 
-
+        // Odblokiranje korisnika
         public ActionResult Odblokiraj(string korisnickoIme)
         {
             var korisnik = _korisniciRepo.PronadjiPoKorisnickomImenu(korisnickoIme);
@@ -54,14 +56,14 @@ namespace Aranzmani.Controllers
             return RedirectToAction("Index");
         }
 
-
+        // Pregled komentara
         public ActionResult Komentari()
         {
             var komentari = _komentariRepo.PronadjiSve();
             return View(komentari);
         }
 
-
+        // Odbijanje komentara
         public ActionResult OdbijKomentar(int id)
         {
             var komentari = _komentariRepo.PronadjiSve();
@@ -80,7 +82,7 @@ namespace Aranzmani.Controllers
             return RedirectToAction("Komentari");
         }
 
-
+        // Prihvatanje komentara
         public ActionResult PrihvatiKomentar(int id)
         {
             var komentari = _komentariRepo.PronadjiSve();
