@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<WebAranzmani.Models.KorisnikInfo>
+@using WebAranzmani.Models
+
 @{
     ViewBag.Title = "Korisnici";
 }
@@ -179,7 +181,15 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Obriši", "DeleteUser", new { username = k.KorisnickoIme }, new { @class = "btn btn-danger btn-sm" })
+                        @{
+                            var trenutni = (WebAranzmani.Models.KorisnikInfo)Session["Korisnik"];
+                        }
+
+                        @* Sakrij dugme za admina ili za sebe *@
+                        @if (k.Uloga != Uloga.Admin && k.KorisnickoIme != trenutni.KorisnickoIme)
+                        {
+                            @Html.ActionLink("Obriši", "DeleteUser", "Admin", new { username = k.KorisnickoIme }, new { @class = "btn btn-danger btn-sm" })
+                        }
                     </td>
                 </tr>
             }

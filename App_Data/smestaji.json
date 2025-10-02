@@ -9,7 +9,10 @@
     "SpaCentar": false,
     "Prilagodjen": false,
     "Wifi": false,
-    "Jedinice": [1, 2],
+    "Jedinice": [
+      1,
+      2
+    ],
     "Komentari": [],
     "Obrisano": false
   },
@@ -90,7 +93,9 @@
     "Prilagodjen": false,
     "Wifi": true,
     "Jedinice": [
-      9
+      9,
+      12,
+      13
     ],
     "Komentari": [],
     "Obrisano": false

@@ -40,5 +40,19 @@
     "Status": 0,
     "AranzmanId": 5,
     "SmestajnaJedinicaId": 7
+  },
+  {
+    "RezervacijaId": 7,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 5,
+    "SmestajnaJedinicaId": 8
+  },
+  {
+    "RezervacijaId": 8,
+    "Turista": "turista1",
+    "Status": 0,
+    "AranzmanId": 6,
+    "SmestajnaJedinicaId": 12
   }
 ]

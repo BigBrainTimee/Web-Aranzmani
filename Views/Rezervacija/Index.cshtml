@@ -119,9 +119,10 @@
                                 @if (jeMenadzer)
                                 {
                                     <a class="btn btn-sm btn-success mb-1"
-                                       href="@Url.Action("Create","Rezervacija", new { aranzmanId = r.AranzmanId, smestajId = jed?.SmestajId, jedinicaId = r.SmestajnaJedinicaId })">
+                                       href="@Url.Action("Kreiraj","Rezervacija", new { aranzmanId = r.AranzmanId, smestajId = jed?.SmestajId, jedinicaId = r.SmestajnaJedinicaId })">
                                         Rezerviši za gosta
                                     </a>
+
                                 }
                             </td>
                         </tr>

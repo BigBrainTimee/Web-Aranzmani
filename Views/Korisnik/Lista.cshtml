@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebAranzmani.Models.KorisnikInfo>
+
+@{
+    ViewBag.Title = "Lista korisnika";
+}
+
+<h2 class="mb-4">Lista korisnika</h2>
+
+@if (!Model.Any())
+{
+    <p>Nema registrovanih korisnika.</p>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Korisničko ime</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Email</th>
+                <th>Datum rođenja</th>
+                <th>Pol</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var korisnik in Model)
+            {
+                <tr>
+                    <td>@korisnik.KorisnickoIme</td>
+                    <td>@korisnik.Ime</td>
+                    <td>@korisnik.Prezime</td>
+                    <td>@korisnik.Email</td>
+                    <td>@korisnik.DatumRodjenja.ToString("dd/MM/yyyy")</td>
+                    <td>@korisnik.Pol</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

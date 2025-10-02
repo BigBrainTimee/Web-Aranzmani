@@ -4,7 +4,6 @@ using WebAranzmani.Service;
 using System.Linq;
 using System.Web.Mvc;
 
-
 namespace Aranzmani.Controllers
 {
     public class AdminController : Controller
@@ -100,11 +99,77 @@ namespace Aranzmani.Controllers
 
             return RedirectToAction("Komentari");
         }
+
+        // Pregled svih korisnika
         public ActionResult Users()
         {
             var korisnici = _korisniciRepo.PronadjiSve();
             return View(korisnici);
         }
+
+        // GET: Dodavanje menadžera
+        public ActionResult CreateManager()
+        {
+            return View();
+        }
+
+        // POST: Dodavanje menadžera
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateManager(KorisnikInfo novi)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Error = "Popunite sva obavezna polja.";
+                return View(novi);
+            }
+
+            var korisniciServis = new KorisniciServise();
+            if (korisniciServis.PronadjiSve().Any(k => k.KorisnickoIme == novi.KorisnickoIme))
+            {
+                ViewBag.Error = "Korisničko ime već postoji.";
+                return View(novi);
+            }
+
+            novi.Uloga = Uloga.Menadzer; // OVDE postavljamo ulogu
+                                         // direktno sačuvamo korisnika, a ne kroz Registruj, da se ne prepisuje uloga
+            var svi = korisniciServis.PronadjiSve();
+            svi.Add(novi);
+            new KorisniciRepozitorijum().SacuvajSve(svi);
+
+            TempData["Success"] = $"Menadžer {novi.Ime} {novi.Prezime} je uspešno dodat.";
+            return RedirectToAction("Users");
+        }
+
+        // GET ili POST: /Admin/DeleteUser
+        public ActionResult DeleteUser(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                TempData["Poruka"] = "Korisničko ime nije prosleđeno.";
+                return RedirectToAction("Users");
+            }
+
+            var korisniciServis = new KorisniciServise();
+            var user = korisniciServis.PronadjiSve().FirstOrDefault(k => k.KorisnickoIme == username);
+
+            if (user == null)
+            {
+                TempData["Poruka"] = "Korisnik nije pronađen.";
+            }
+            else if (user.Uloga == Uloga.Admin)
+            {
+                TempData["Poruka"] = "Admin ne može da obriše samog sebe ili drugog admina.";
+            }
+            else
+            {
+                korisniciServis.Obrisi(username);
+                TempData["Poruka"] = $"Korisnik {username} je uspešno obrisan.";
+            }
+
+            return RedirectToAction("Users");
+        }
+
 
     }
 }

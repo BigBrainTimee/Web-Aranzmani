@@ -60,7 +60,7 @@
     "BrojGostiju": 2,
     "Ljubimci": false,
     "Cena": 75.0,
-    "Status": 1,
+    "Status": 0,
     "Obrisana": false,
     "Komentari": [],
     "Naziv": ""
@@ -82,7 +82,7 @@
     "BrojGostiju": 3,
     "Ljubimci": true,
     "Cena": 250.0,
-    "Status": 0,
+    "Status": 1,
     "Obrisana": false,
     "Komentari": [],
     "Naziv": ""
@@ -115,6 +115,28 @@
     "BrojGostiju": 3,
     "Ljubimci": true,
     "Cena": 170.0,
+    "Status": 0,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 12,
+    "SmestajId": 6,
+    "BrojGostiju": 15,
+    "Ljubimci": true,
+    "Cena": 250.0,
+    "Status": 1,
+    "Obrisana": false,
+    "Komentari": [],
+    "Naziv": ""
+  },
+  {
+    "JedinicaId": 13,
+    "SmestajId": 6,
+    "BrojGostiju": 15,
+    "Ljubimci": true,
+    "Cena": 250.0,
     "Status": 0,
     "Obrisana": false,
     "Komentari": [],

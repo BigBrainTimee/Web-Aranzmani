@@ -247,6 +247,7 @@
     <Content Include="Views\Rezervacija\Index.cshtml" />
     <Content Include="Views\Rezervacija\IndexMenadzer.cshtml" />
     <Content Include="Views\Aranzman\Detalji.cshtml" />
+    <Content Include="Views\Korisnik\Lista.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -67,9 +67,15 @@
 <div class="form-card">
     <h2 class="text-center">Dodaj novog menadžera</h2>
 
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
+
         <div class="mb-3">
             @Html.LabelFor(m => m.KorisnickoIme, new { @class = "form-label" })
             @Html.TextBoxFor(m => m.KorisnickoIme, new { @class = "form-control", placeholder = "Unesite korisničko ime" })
@@ -88,6 +94,21 @@
         <div class="mb-3">
             @Html.LabelFor(m => m.Prezime, new { @class = "form-label" })
             @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control", placeholder = "Prezime menadžera" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email menadžera" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Pol, new { @class = "form-label" })
+            @Html.DropDownListFor(m => m.Pol, new SelectList(new[] { "Muški", "Ženski" }), "-- Izaberi pol --", new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(m => m.DatumRodjenja, new { @class = "form-label" })
+            @Html.TextBoxFor(m => m.DatumRodjenja, new { type = "date", @class = "form-control" })
         </div>
 
         <div class="d-grid">

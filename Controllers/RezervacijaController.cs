@@ -82,6 +82,7 @@ namespace WebAranzmani.Controllers
         }
 
         // === TURISTA KREIRA REZERVACIJU ===
+        [ActionName("Kreiraj")]
         public ActionResult Create(int aranzmanId, int smestajId, int jedinicaId)
         {
             var user = Session["Korisnik"] as KorisnikInfo;
